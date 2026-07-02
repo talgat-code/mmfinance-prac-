@@ -5,9 +5,11 @@ import './index.css'
 import './i18n'
 import App from './App.tsx'
 
+const routerBasename = import.meta.env.PROD ? import.meta.env.BASE_URL : '/'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <App />
     </BrowserRouter>
   </StrictMode>,
