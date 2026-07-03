@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, Phone, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -8,6 +8,7 @@ export function Header() {
   const { t } = useTranslation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const phoneHref = t('contacts.phoneHref')
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 8)
@@ -86,6 +87,13 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <a
+            className="hidden min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-sm transition hover:bg-primary-soft lg:inline-flex"
+            href={`tel:${phoneHref}`}
+          >
+            <Phone aria-hidden="true" className="size-4 text-accent" />
+            {t('contacts.phone')}
+          </a>
           <div className="hidden sm:block">
             <LanguageSwitcher />
           </div>
@@ -126,6 +134,13 @@ export function Header() {
                   renderNavLink(item.href, item.label, true),
                 )}
               </nav>
+              <a
+                className="mt-4 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-bold text-white"
+                href={`tel:${phoneHref}`}
+              >
+                <Phone aria-hidden="true" className="size-4 text-accent" />
+                {t('contacts.phone')}
+              </a>
             </div>
           </motion.div>
         ) : null}

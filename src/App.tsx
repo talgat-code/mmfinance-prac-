@@ -4,6 +4,7 @@ import { About } from './components/sections/About'
 import { Contacts } from './components/sections/Contacts'
 import { Hero } from './components/sections/Hero'
 import { Services } from './components/sections/Services'
+import { WarningBlock } from './components/sections/WarningBlock'
 import { WhyUs } from './components/sections/WhyUs'
 
 function LandingPage() {
@@ -12,6 +13,7 @@ function LandingPage() {
       <Hero />
       <About />
       <Services />
+      <WarningBlock />
       <WhyUs />
       <Contacts />
     </Layout>

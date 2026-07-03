@@ -1,39 +1,37 @@
+import type { LucideIcon } from 'lucide-react'
 import {
-  CreditCard,
-  FileCheck2,
-  Landmark,
-  MessageCircle,
+  Briefcase,
+  Car,
+  Globe,
+  Home,
+  User,
+  Users,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { SectionHeading } from '../ui/SectionHeading'
 import { SectionReveal } from '../ui/SectionReveal'
 
+const serviceIcons = {
+  Briefcase,
+  Car,
+  Globe,
+  Home,
+  User,
+  Users,
+} satisfies Record<string, LucideIcon>
+
+type ServiceIconName = keyof typeof serviceIcons
+
+type ServiceItem = {
+  icon: ServiceIconName
+  title: string
+  description: string
+}
+
 export function Services() {
   const { t } = useTranslation()
-
-  const services = [
-    {
-      icon: CreditCard,
-      title: t('services.items.creditHistory.title'),
-      description: t('services.items.creditHistory.description'),
-    },
-    {
-      icon: Landmark,
-      title: t('services.items.mortgage.title'),
-      description: t('services.items.mortgage.description'),
-    },
-    {
-      icon: FileCheck2,
-      title: t('services.items.documents.title'),
-      description: t('services.items.documents.description'),
-    },
-    {
-      icon: MessageCircle,
-      title: t('services.items.support.title'),
-      description: t('services.items.support.description'),
-    },
-  ]
+  const services = t('services.items', { returnObjects: true }) as ServiceItem[]
 
   return (
     <section
@@ -51,26 +49,29 @@ export function Services() {
           />
         </SectionReveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {services.map(({ description, icon: Icon, title }, index) => (
-            <SectionReveal className="h-full" key={title}>
-              <Card
-                className={`flex h-full flex-col overflow-hidden ${
-                  index % 2 === 1 ? 'xl:mt-8' : ''
-                }`}
-                hover
-              >
-                <div className="mb-7 flex items-center justify-between">
-                  <span className="flex size-14 items-center justify-center rounded-2xl bg-accent-soft text-primary ring-1 ring-accent/20">
-                    <Icon aria-hidden="true" className="size-7" />
-                  </span>
-                  <span className="h-px w-16 bg-gradient-to-r from-accent to-transparent" />
-                </div>
-                <h3 className="text-xl font-bold leading-tight text-primary">{title}</h3>
-                <p className="mt-4 text-sm leading-7 text-muted">{description}</p>
-              </Card>
-            </SectionReveal>
-          ))}
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {services.map(({ description, icon, title }) => {
+            const Icon = serviceIcons[icon]
+
+            return (
+              <SectionReveal className="h-full" key={title}>
+                <Card className="flex h-full flex-col overflow-hidden" hover>
+                  <div className="mb-7 flex items-center justify-between">
+                    <span className="flex size-14 items-center justify-center rounded-2xl bg-accent-soft text-primary ring-1 ring-accent/20">
+                      <Icon aria-hidden="true" className="size-7" />
+                    </span>
+                    <span className="h-px w-16 bg-gradient-to-r from-accent to-transparent" />
+                  </div>
+                  <h3 className="text-xl font-bold leading-tight text-primary">
+                    {title}
+                  </h3>
+                  <p className="mt-4 text-base font-semibold leading-7 text-muted">
+                    {description}
+                  </p>
+                </Card>
+              </SectionReveal>
+            )
+          })}
         </div>
       </div>
     </section>

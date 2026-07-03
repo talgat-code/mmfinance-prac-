@@ -4,26 +4,16 @@ import { Card } from '../ui/Card'
 import { SectionHeading } from '../ui/SectionHeading'
 import { SectionReveal } from '../ui/SectionReveal'
 
+type FactItem = {
+  value: string
+  label: string
+}
+
+const factIcons = [FileSearch, ClipboardCheck, ShieldCheck]
+
 export function About() {
   const { t } = useTranslation()
-
-  const facts = [
-    {
-      icon: FileSearch,
-      value: t('about.facts.audit.value'),
-      label: t('about.facts.audit.label'),
-    },
-    {
-      icon: ClipboardCheck,
-      value: t('about.facts.strategy.value'),
-      label: t('about.facts.strategy.label'),
-    },
-    {
-      icon: ShieldCheck,
-      value: t('about.facts.support.value'),
-      label: t('about.facts.support.label'),
-    },
-  ]
+  const facts = t('about.facts', { returnObjects: true }) as FactItem[]
 
   return (
     <section className="relative overflow-hidden py-20 sm:py-24" id="about">
@@ -41,24 +31,28 @@ export function About() {
         </SectionReveal>
 
         <SectionReveal className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-          {facts.map(({ icon: Icon, label, value }) => (
-            <Card
-              className="group relative overflow-hidden p-6 sm:min-h-44 lg:min-h-0"
-              hover
-              key={label}
-            >
-              <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-accent/10 transition group-hover:bg-accent/20" />
-              <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center">
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-accent shadow-soft">
-                  <Icon aria-hidden="true" className="size-6" />
-                </span>
-                <div>
-                  <p className="text-2xl font-black text-primary">{value}</p>
-                  <p className="mt-2 text-sm leading-6 text-muted">{label}</p>
+          {facts.map(({ label, value }, index) => {
+            const Icon = factIcons[index] ?? ShieldCheck
+
+            return (
+              <Card
+                className="group relative overflow-hidden p-6 sm:min-h-44 lg:min-h-0"
+                hover
+                key={label}
+              >
+                <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-accent/10 transition group-hover:bg-accent/20" />
+                <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-accent shadow-soft">
+                    <Icon aria-hidden="true" className="size-6" />
+                  </span>
+                  <div>
+                    <p className="text-2xl font-black text-primary">{value}</p>
+                    <p className="mt-2 text-sm leading-6 text-muted">{label}</p>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          ))}
+              </Card>
+            )
+          })}
         </SectionReveal>
       </div>
     </section>

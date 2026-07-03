@@ -1,38 +1,56 @@
-import { Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
+import type { FormEvent } from 'react'
+import type { LucideIcon } from 'lucide-react'
+import { MapPin, MessageCircle, Phone, Send } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { SectionHeading } from '../ui/SectionHeading'
 import { SectionReveal } from '../ui/SectionReveal'
 
+type ContactItem = {
+  icon: LucideIcon
+  title: string
+  label: string
+  href?: string
+  external?: boolean
+}
+
 export function Contacts() {
   const { t } = useTranslation()
+  const phoneHref = t('contacts.phoneHref')
+  const whatsappHref = t('contacts.whatsappHref')
 
-  const contacts = [
+  const contacts: ContactItem[] = [
     {
       icon: Phone,
       title: t('contacts.cards.phone'),
       label: t('contacts.phone'),
-      href: `tel:${t('contacts.phone').replace(/\s/g, '')}`,
+      href: `tel:${phoneHref}`,
     },
     {
       icon: MessageCircle,
       title: t('contacts.cards.whatsapp'),
-      label: t('contacts.whatsapp'),
-      href: `https://wa.me/${t('contacts.whatsapp').replace(/\D/g, '')}`,
-    },
-    {
-      icon: Mail,
-      title: t('contacts.cards.email'),
-      label: t('contacts.email'),
-      href: `mailto:${t('contacts.email')}`,
+      label: t('contacts.whatsappLabel'),
+      href: `https://wa.me/${whatsappHref}`,
+      external: true,
     },
     {
       icon: MapPin,
       title: t('contacts.cards.address'),
       label: t('contacts.address'),
-      href: '#contacts',
     },
   ]
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const name = String(formData.get('name') ?? '').trim() || '-'
+    const phone = String(formData.get('phone') ?? '').trim() || '-'
+    const message = t('contacts.form.whatsappMessage', { name, phone })
+    const url = `https://wa.me/${whatsappHref}?text=${encodeURIComponent(message)}`
+
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
 
   return (
     <section
@@ -50,24 +68,39 @@ export function Contacts() {
           />
         </SectionReveal>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {contacts.map(({ href, icon: Icon, label, title }) => (
-            <SectionReveal className="h-full" key={title}>
-              <a className="block h-full" href={href}>
-                <Card className="h-full" hover>
-                  <span className="flex size-12 items-center justify-center rounded-2xl bg-accent-soft text-primary ring-1 ring-accent/20">
-                    <Icon aria-hidden="true" className="size-6" />
-                  </span>
-                  <p className="mt-5 text-sm font-semibold uppercase tracking-[0.16em] text-accent">
-                    {title}
-                  </p>
-                  <p className="mt-3 text-base font-bold leading-6 text-primary">
-                    {label}
-                  </p>
-                </Card>
-              </a>
-            </SectionReveal>
-          ))}
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {contacts.map(({ external, href, icon: Icon, label, title }) => {
+            const content = (
+              <Card className="h-full" hover>
+                <span className="flex size-12 items-center justify-center rounded-2xl bg-accent-soft text-primary ring-1 ring-accent/20">
+                  <Icon aria-hidden="true" className="size-6" />
+                </span>
+                <p className="mt-5 text-sm font-semibold uppercase tracking-[0.16em] text-accent">
+                  {title}
+                </p>
+                <p className="mt-3 text-base font-bold leading-6 text-primary">
+                  {label}
+                </p>
+              </Card>
+            )
+
+            return (
+              <SectionReveal className="h-full" key={title}>
+                {href ? (
+                  <a
+                    className="block h-full"
+                    href={href}
+                    rel={external ? 'noreferrer' : undefined}
+                    target={external ? '_blank' : undefined}
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <div className="h-full">{content}</div>
+                )}
+              </SectionReveal>
+            )
+          })}
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
@@ -79,16 +112,18 @@ export function Contacts() {
                   {Array.from({ length: 18 }).map((_, index) => (
                     <span
                       className="size-2 rounded-full bg-accent"
-                      key={index}
+                      key={`map-dot-${index}`}
                     />
                   ))}
                 </div>
-                {/* TODO: Replace this placeholder with a Google Maps iframe when the office address is final. */}
                 <div className="relative rounded-2xl border border-white/10 bg-white/10 p-5 backdrop-blur">
                   <MapPin aria-hidden="true" className="size-8 text-accent" />
                   <h3 className="mt-5 text-2xl font-bold">{t('contacts.map.title')}</h3>
                   <p className="mt-3 text-sm leading-6 text-white/72">
                     {t('contacts.map.description')}
+                  </p>
+                  <p className="mt-5 text-base font-bold leading-7 text-white">
+                    {t('contacts.address')}
                   </p>
                 </div>
               </div>
@@ -106,13 +141,7 @@ export function Contacts() {
                 </p>
               </div>
 
-              <form
-                className="space-y-5"
-                onSubmit={(event) => {
-                  event.preventDefault()
-                  // TODO: Connect the form to WhatsApp Business API or email delivery.
-                }}
-              >
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 <div>
                   <label
                     className="text-sm font-semibold text-primary"

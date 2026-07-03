@@ -1,27 +1,23 @@
-import {
-  Globe,
-  Mail,
-  MapPin,
-  MessageCircle,
-  Phone,
-  Send,
-} from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { MapPin, MessageCircle, Phone } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+
+type FooterContact = {
+  icon: LucideIcon
+  text: string
+  href?: string
+  external?: boolean
+}
 
 export function Footer() {
   const { t } = useTranslation()
   const currentYear = new Date().getFullYear()
+  const phoneHref = t('contacts.phoneHref')
+  const whatsappHref = t('contacts.whatsappHref')
 
-  const contacts = [
-    { icon: Phone, text: t('footer.phone') },
-    { icon: Mail, text: t('footer.email') },
-    { icon: MapPin, text: t('footer.address') },
-  ]
-
-  const socials = [
-    { icon: MessageCircle, label: t('footer.socials.instagram'), href: '#' },
-    { icon: Globe, label: t('footer.socials.facebook'), href: '#' },
-    { icon: Send, label: t('footer.socials.linkedin'), href: '#' },
+  const contacts: FooterContact[] = [
+    { icon: Phone, text: t('contacts.phone'), href: `tel:${phoneHref}` },
+    { icon: MapPin, text: t('contacts.address') },
   ]
 
   return (
@@ -53,10 +49,21 @@ export function Footer() {
             {t('footer.contactsTitle')}
           </h3>
           <ul className="mt-5 space-y-4 text-sm text-white/72">
-            {contacts.map(({ icon: Icon, text }) => (
+            {contacts.map(({ external, href, icon: Icon, text }) => (
               <li className="flex items-start gap-3" key={text}>
                 <Icon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent" />
-                <span>{text}</span>
+                {href ? (
+                  <a
+                    className="transition hover:text-accent"
+                    href={href}
+                    rel={external ? 'noreferrer' : undefined}
+                    target={external ? '_blank' : undefined}
+                  >
+                    {text}
+                  </a>
+                ) : (
+                  <span>{text}</span>
+                )}
               </li>
             ))}
           </ul>
@@ -64,19 +71,18 @@ export function Footer() {
 
         <div>
           <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-accent">
-            {t('footer.socialTitle')}
+            {t('footer.quickContactTitle')}
           </h3>
-          <div className="mt-5 flex gap-3">
-            {socials.map(({ href, icon: Icon, label }) => (
-              <a
-                aria-label={label}
-                className="flex size-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
-                href={href}
-                key={label}
-              >
-                <Icon aria-hidden="true" className="size-5" />
-              </a>
-            ))}
+          <div className="mt-5">
+            <a
+              aria-label={t('footer.whatsapp')}
+              className="inline-flex size-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+              href={`https://wa.me/${whatsappHref}`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <MessageCircle aria-hidden="true" className="size-5" />
+            </a>
           </div>
         </div>
       </div>
