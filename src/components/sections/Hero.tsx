@@ -27,6 +27,46 @@ export function Hero() {
       id="home"
     >
       <div className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
+      <svg
+        aria-hidden="true"
+        className="absolute right-[-5rem] top-16 -z-10 hidden h-[30rem] w-[36rem] text-accent opacity-[0.13] lg:block"
+        fill="none"
+        viewBox="0 0 620 520"
+      >
+        <path
+          d="M76 418C182 372 242 306 330 236C404 177 466 129 548 64"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="10"
+        />
+        <path
+          d="M492 64H552V124"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="10"
+        />
+        {[86, 132, 178, 224, 270, 316].map((x, index) => (
+          <rect
+            fill="currentColor"
+            height={72 + index * 22}
+            key={x}
+            rx="10"
+            width="24"
+            x={x}
+            y={392 - index * 22}
+          />
+        ))}
+        {[0, 1, 2, 3, 4].map((index) => (
+          <path
+            d={`M${92 + index * 68} 72L${238 + index * 68} 218`}
+            key={index}
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth="3"
+          />
+        ))}
+      </svg>
 
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:px-8">
         <motion.div
@@ -51,6 +91,38 @@ export function Hero() {
             {t('hero.description')}
           </p>
 
+          <ol className="mt-10 grid gap-3">
+            {problems.map((item, index) => {
+              const isSolution = index === problems.length - 1
+
+              return (
+                <li
+                  className={`flex items-center gap-3 rounded-2xl border p-4 shadow-sm ring-1 ring-primary/5 backdrop-blur ${
+                    isSolution
+                      ? 'border-accent/45 bg-primary text-white'
+                      : 'border-white/70 bg-white/78 text-primary'
+                  }`}
+                  key={item}
+                >
+                  <span
+                    className={`flex size-9 shrink-0 items-center justify-center rounded-xl text-sm font-black ${
+                      isSolution ? 'bg-accent text-primary' : 'bg-primary text-accent'
+                    }`}
+                  >
+                    {index + 1}
+                  </span>
+                  <span
+                    className={`text-base font-bold leading-6 ${
+                      isSolution ? 'text-white' : 'text-primary'
+                    }`}
+                  >
+                    {item}
+                  </span>
+                </li>
+              )
+            })}
+          </ol>
+
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Button href="#contacts">
               {t('hero.primaryCta')}
@@ -60,20 +132,6 @@ export function Hero() {
               {t('hero.secondaryCta')}
             </Button>
           </div>
-
-          <ol className="mt-10 grid gap-3">
-            {problems.map((item, index) => (
-              <li
-                className="flex items-center gap-3 rounded-2xl border border-white/70 bg-white/78 p-4 shadow-sm ring-1 ring-primary/5 backdrop-blur"
-                key={item}
-              >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-black text-accent">
-                  {index + 1}
-                </span>
-                <span className="text-base font-bold leading-6 text-primary">{item}</span>
-              </li>
-            ))}
-          </ol>
         </motion.div>
 
         <motion.div
@@ -91,7 +149,7 @@ export function Hero() {
                     {t('hero.panel.title')}
                   </p>
                   <h2 className="mt-4 text-3xl font-black leading-tight text-white">
-                    {t('hero.closingSlogan')}
+                    {t('hero.tagline')}
                   </h2>
                 </div>
                 <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-primary shadow-[0_16px_45px_rgb(212_175_55_/_0.22)]">

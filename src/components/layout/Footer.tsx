@@ -2,6 +2,8 @@ import type { LucideIcon } from 'lucide-react'
 import { MapPin, MessageCircle, Phone } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
+const logoUrl = new URL('../../assets/images/mm-finance-logo.svg', import.meta.url).href
+
 type FooterContact = {
   icon: LucideIcon
   text: string
@@ -26,8 +28,13 @@ export function Footer() {
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.1fr_0.9fr_0.6fr] lg:px-8">
         <div>
           <a className="inline-flex items-center gap-3" href="#home">
-            <span className="flex size-12 items-center justify-center rounded-2xl bg-accent text-sm font-black text-primary">
-              {t('brand.shortName').slice(0, 2)}
+            <span className="flex h-14 w-36 items-center justify-center rounded-2xl bg-white/8 px-2 ring-1 ring-white/10">
+              <img
+                alt=""
+                aria-hidden="true"
+                className="h-12 w-full object-contain"
+                src={logoUrl}
+              />
             </span>
             <span className="flex flex-col leading-none">
               <span className="text-base font-black">{t('brand.shortName')}</span>

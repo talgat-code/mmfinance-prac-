@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { About } from './components/sections/About'
 import { Contacts } from './components/sections/Contacts'
+import { FinalSlogan } from './components/sections/FinalSlogan'
 import { Hero } from './components/sections/Hero'
 import { Services } from './components/sections/Services'
 import { WarningBlock } from './components/sections/WarningBlock'
@@ -55,6 +56,7 @@ function LandingPage() {
       <Services />
       <WarningBlock />
       <WhyUs />
+      <FinalSlogan />
       <Contacts />
     </Layout>
   )

@@ -1,0 +1,22 @@
+<svg width="420" height="160" viewBox="0 0 420 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">MM Finance Consulting logo</title>
+  <desc id="desc">White MM letters with a gold rising chart arrow and Finance Consulting text.</desc>
+  <g opacity="0.98">
+    <path d="M36 104V34H59L83 83L107 34H130V104H109V69L91 104H75L57 69V104H36Z" fill="#f8fafc"/>
+    <path d="M148 104V34H171L195 83L219 34H242V104H221V69L203 104H187L169 69V104H148Z" fill="#e2e8f0"/>
+  </g>
+  <g>
+    <rect x="78" y="84" width="8" height="20" rx="2" fill="#d4af37"/>
+    <rect x="90" y="74" width="8" height="30" rx="2" fill="#d4af37"/>
+    <rect x="102" y="62" width="8" height="42" rx="2" fill="#d4af37"/>
+    <rect x="190" y="82" width="8" height="22" rx="2" fill="#d4af37"/>
+    <rect x="202" y="68" width="8" height="36" rx="2" fill="#d4af37"/>
+    <rect x="214" y="54" width="8" height="50" rx="2" fill="#d4af37"/>
+  </g>
+  <path d="M258 95C292 84 322 63 354 34" stroke="#d4af37" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M328 31H356V59" stroke="#d4af37" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M258 95C292 84 322 63 354 34" stroke="#fff8d6" stroke-width="3" stroke-linecap="round" opacity="0.72"/>
+  <text x="36" y="137" fill="#d4af37" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="7">
+    FINANCE CONSULTING
+  </text>
+</svg>

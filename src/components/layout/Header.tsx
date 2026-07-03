@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
+const logoUrl = new URL('../../assets/images/mm-finance-logo.svg', import.meta.url).href
+
 export function Header() {
   const { t } = useTranslation()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -66,10 +68,15 @@ export function Header() {
           href="#home"
           onClick={() => setIsMenuOpen(false)}
         >
-          <span className="flex size-11 items-center justify-center rounded-2xl bg-primary text-sm font-black text-accent shadow-soft ring-1 ring-white/20">
-            {t('brand.shortName').slice(0, 2)}
+          <span className="flex h-12 w-28 items-center justify-center rounded-2xl bg-primary px-2 shadow-soft ring-1 ring-white/20 sm:w-32">
+            <img
+              alt=""
+              aria-hidden="true"
+              className="h-10 w-full object-contain"
+              src={logoUrl}
+            />
           </span>
-          <span className="flex flex-col leading-none">
+          <span className="hidden flex-col leading-none sm:flex">
             <span className="text-sm font-black tracking-wide text-primary sm:text-base">
               {t('brand.shortName')}
             </span>
