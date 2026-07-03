@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
-export default defineConfig({
-  base: '/mmfinance-prac-/',
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/mmfinance-prac-/' : '/',
   plugins: [react(), tailwindcss()],
-})
+}))
