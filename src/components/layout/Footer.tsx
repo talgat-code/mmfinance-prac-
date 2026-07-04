@@ -9,6 +9,7 @@ type FooterContact = {
   text: string
   href?: string
   external?: boolean
+  ariaLabel?: string
 }
 
 export function Footer() {
@@ -18,7 +19,12 @@ export function Footer() {
   const whatsappHref = t('contacts.whatsappHref')
 
   const contacts: FooterContact[] = [
-    { icon: Phone, text: t('contacts.phone'), href: `tel:${phoneHref}` },
+    {
+      ariaLabel: t('contacts.callLabel'),
+      icon: Phone,
+      text: t('contacts.phone'),
+      href: `tel:${phoneHref}`,
+    },
     { icon: MapPin, text: t('contacts.address') },
   ]
 
@@ -27,7 +33,11 @@ export function Footer() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,_rgb(212_175_55_/_0.18),_transparent_28%),linear-gradient(180deg,_rgb(255_255_255_/_0.03),_transparent)]" />
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.1fr_0.9fr_0.6fr] lg:px-8">
         <div>
-          <a className="inline-flex items-center gap-3" href="#home">
+          <a
+            aria-label={t('brand.name')}
+            className="inline-flex items-center gap-3"
+            href="#home"
+          >
             <span className="flex h-14 w-36 items-center justify-center rounded-2xl bg-white/8 px-2 ring-1 ring-white/10">
               <img
                 alt=""
@@ -56,12 +66,13 @@ export function Footer() {
             {t('footer.contactsTitle')}
           </h3>
           <ul className="mt-5 space-y-4 text-sm text-white/72">
-            {contacts.map(({ external, href, icon: Icon, text }) => (
+            {contacts.map(({ ariaLabel, external, href, icon: Icon, text }) => (
               <li className="flex items-start gap-3" key={text}>
                 <Icon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent" />
                 {href ? (
                   <a
-                    className="transition hover:text-accent"
+                    aria-label={ariaLabel}
+                    className="inline-flex min-h-10 items-center transition hover:text-accent"
                     href={href}
                     rel={external ? 'noreferrer' : undefined}
                     target={external ? '_blank' : undefined}
@@ -82,7 +93,7 @@ export function Footer() {
           </h3>
           <div className="mt-5">
             <a
-              aria-label={t('footer.whatsapp')}
+              aria-label={t('contacts.whatsappAriaLabel')}
               className="inline-flex size-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
               href={`https://wa.me/${whatsappHref}`}
               rel="noreferrer"

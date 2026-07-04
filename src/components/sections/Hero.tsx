@@ -167,7 +167,7 @@ export function Hero() {
                     className="rounded-2xl border border-white/10 bg-white/10 p-4"
                     key={item.label}
                   >
-                    <p className="text-sm text-white/58">{item.label}</p>
+                    <p className="text-sm text-white/72">{item.label}</p>
                     <p className="mt-2 text-lg font-bold leading-6 text-white">
                       {item.value}
                     </p>
@@ -177,6 +177,7 @@ export function Hero() {
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 <a
+                  aria-label={t('contacts.callLabel')}
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-bold text-primary transition hover:bg-[#c9a12f]"
                   href={`tel:${phoneHref}`}
                 >
@@ -184,6 +185,7 @@ export function Hero() {
                   {t('contacts.phone')}
                 </a>
                 <a
+                  aria-label={t('contacts.whatsappAriaLabel')}
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 py-3 text-sm font-bold text-white transition hover:border-accent/60 hover:text-accent"
                   href={`https://wa.me/${whatsappHref}`}
                   rel="noreferrer"

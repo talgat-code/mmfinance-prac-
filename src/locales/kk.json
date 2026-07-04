@@ -16,7 +16,9 @@
   "language": {
     "label": "Тіл ауыстырғыш",
     "ru": "RU",
-    "kk": "KZ"
+    "kk": "KZ",
+    "switchToRu": "Тілді орыс тіліне ауыстыру",
+    "switchToKk": "Тілді қазақ тіліне ауыстыру"
   },
   "hero": {
     "eyebrow": "Қаржылық консалтинг",
@@ -138,6 +140,8 @@
     "phoneHref": "+77770866254",
     "whatsappHref": "77770866254",
     "whatsappLabel": "WhatsApp-қа жазу",
+    "callLabel": "MM Finance Consulting-ке қоңырау шалу",
+    "whatsappAriaLabel": "MM Finance Consulting WhatsApp чатын ашу",
     "address": "Мекенжайымыз: Aspara БЦ, 3 этажное здание, 2 этаж, 226/3 кабинет",
     "cards": {
       "phone": "Телефон",
@@ -149,11 +153,16 @@
       "description": "Атыңыз бен телефон нөміріңізді қалдырыңыз — менеджер міндетіңізді тез түсінуі үшін WhatsApp хабарламасын дайындаймыз.",
       "nameLabel": "Атыңыз",
       "namePlaceholder": "Атыңыз",
+      "nameRequired": "Атыңызды енгізіңіз",
       "phoneLabel": "Телефон",
       "phonePlaceholder": "8 777 086 62 54",
-      "submit": "WhatsApp-қа жазу",
+      "phoneRequired": "Телефонды енгізіңіз",
+      "phoneInvalid": "Телефон тек цифрлардан, +, бос орындардан және жақшалардан тұруы керек",
+      "submit": "Жіберу",
+      "submitAriaLabel": "Өтінімді WhatsApp-қа жіберу",
+      "success": "WhatsApp ашылып жатыр...",
       "note": "Жібергеннен кейін дайын хабарламамен WhatsApp ашылады.",
-      "whatsappMessage": "Сәлеметсіз бе! MM Finance Consulting кеңесін алғым келеді. Атым: {{name}}. Телефоным: {{phone}}."
+      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}. Несие бойынша кеңес алғым келеді."
     },
     "map": {
       "title": "MM Finance Consulting офисі",

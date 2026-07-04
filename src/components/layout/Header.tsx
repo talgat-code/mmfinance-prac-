@@ -33,6 +33,22 @@ export function Header() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return undefined
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isMenuOpen])
+
   const navItems = [
     { href: '#about', label: t('nav.about') },
     { href: '#services', label: t('nav.services') },
@@ -42,7 +58,7 @@ export function Header() {
 
   const renderNavLink = (href: string, label: string, isMobile = false) => (
     <a
-      className={`group relative font-medium text-muted transition hover:text-primary ${
+      className={`group relative inline-flex min-h-10 items-center font-medium text-muted transition hover:text-primary ${
         isMobile ? 'py-3 text-lg' : 'text-sm'
       }`}
       href={href}
@@ -64,6 +80,7 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <a
+          aria-label={t('brand.name')}
           className="group flex items-center gap-3 text-primary"
           href="#home"
           onClick={() => setIsMenuOpen(false)}
@@ -95,6 +112,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <a
+            aria-label={t('contacts.callLabel')}
             className="hidden min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-sm transition hover:bg-primary-soft lg:inline-flex"
             href={`tel:${phoneHref}`}
           >
@@ -105,6 +123,7 @@ export function Header() {
             <LanguageSwitcher />
           </div>
           <button
+            aria-controls="mobile-navigation"
             aria-expanded={isMenuOpen}
             aria-label={isMenuOpen ? t('nav.menuClose') : t('nav.menuOpen')}
             className="inline-flex size-11 items-center justify-center rounded-xl border border-border bg-white/80 text-primary shadow-sm transition hover:border-accent md:hidden"
@@ -126,6 +145,7 @@ export function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             className="overflow-hidden border-t border-border bg-surface/96 shadow-soft backdrop-blur-xl md:hidden"
             exit={{ opacity: 0, height: 0 }}
+            id="mobile-navigation"
             initial={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.24, ease: 'easeOut' }}
           >
@@ -142,6 +162,7 @@ export function Header() {
                 )}
               </nav>
               <a
+                aria-label={t('contacts.callLabel')}
                 className="mt-4 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-bold text-white"
                 href={`tel:${phoneHref}`}
               >

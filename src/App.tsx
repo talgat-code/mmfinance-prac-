@@ -1,4 +1,11 @@
-import { Component, type ErrorInfo, type PropsWithChildren, type ReactNode } from 'react'
+import {
+  Component,
+  useEffect,
+  type ErrorInfo,
+  type PropsWithChildren,
+  type ReactNode,
+} from 'react'
+import { useTranslation } from 'react-i18next'
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { About } from './components/sections/About'
@@ -48,6 +55,20 @@ class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundaryState> {
   }
 }
 
+function DocumentLanguage() {
+  const { i18n } = useTranslation()
+  const language = i18n.resolvedLanguage === 'kk' ? 'kk' : 'ru'
+
+  useEffect(() => {
+    document.documentElement.lang = language
+    document
+      .querySelector('meta[property="og:locale"]')
+      ?.setAttribute('content', language === 'kk' ? 'kk_KZ' : 'ru_RU')
+  }, [language])
+
+  return null
+}
+
 function LandingPage() {
   return (
     <Layout>
@@ -65,6 +86,7 @@ function LandingPage() {
 function App() {
   return (
     <ErrorBoundary>
+      <DocumentLanguage />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<LandingPage />} />

@@ -16,7 +16,9 @@
   "language": {
     "label": "Переключатель языка",
     "ru": "RU",
-    "kk": "KZ"
+    "kk": "KZ",
+    "switchToRu": "Переключить язык на русский",
+    "switchToKk": "Переключить язык на казахский"
   },
   "hero": {
     "eyebrow": "Финансовый консалтинг",
@@ -138,6 +140,8 @@
     "phoneHref": "+77770866254",
     "whatsappHref": "77770866254",
     "whatsappLabel": "Написать в WhatsApp",
+    "callLabel": "Позвонить в MM Finance Consulting",
+    "whatsappAriaLabel": "Открыть чат WhatsApp с MM Finance Consulting",
     "address": "Наш адрес: БЦ Aspara, 3-этажное здание, 2 этаж, кабинет 226/3",
     "cards": {
       "phone": "Телефон",
@@ -149,11 +153,16 @@
       "description": "Оставьте имя и номер телефона — мы подготовим сообщение для WhatsApp, чтобы менеджер быстрее понял вашу задачу.",
       "nameLabel": "Имя",
       "namePlaceholder": "Ваше имя",
+      "nameRequired": "Введите имя",
       "phoneLabel": "Телефон",
       "phonePlaceholder": "8 777 086 62 54",
-      "submit": "Написать в WhatsApp",
+      "phoneRequired": "Введите телефон",
+      "phoneInvalid": "Телефон может содержать только цифры, +, пробелы и скобки",
+      "submit": "Отправить",
+      "submitAriaLabel": "Отправить заявку в WhatsApp",
+      "success": "Открываем WhatsApp...",
       "note": "После отправки откроется WhatsApp с подготовленным сообщением.",
-      "whatsappMessage": "Здравствуйте! Хочу получить консультацию MM Finance Consulting. Имя: {{name}}. Телефон: {{phone}}."
+      "whatsappTemplate": "Здравствуйте! Меня зовут {name}, телефон {phone}. Хочу получить консультацию по кредиту."
     },
     "map": {
       "title": "Офис MM Finance Consulting",
