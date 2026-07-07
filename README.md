@@ -19,5 +19,10 @@ npm run build
 npm run lint
 ```
 
-Контент секций пока заполнен placeholder-текстами в `src/locales/ru.json` и
-`src/locales/kk.json`.
+## Deployment
+
+Проект готов к деплою на Vercel как стандартное Vite-приложение.
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Base path: `/`
