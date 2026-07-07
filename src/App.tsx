@@ -12,6 +12,7 @@ import { About } from './components/sections/About'
 import { Contacts } from './components/sections/Contacts'
 import { FinalSlogan } from './components/sections/FinalSlogan'
 import { Hero } from './components/sections/Hero'
+import { PromoPanel } from './components/sections/PromoPanel'
 import { Services } from './components/sections/Services'
 import { WarningBlock } from './components/sections/WarningBlock'
 import { WhyUs } from './components/sections/WhyUs'
@@ -73,6 +74,7 @@ function LandingPage() {
   return (
     <Layout>
       <Hero />
+      <PromoPanel />
       <About />
       <Services />
       <WarningBlock />
