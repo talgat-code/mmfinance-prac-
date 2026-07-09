@@ -2,14 +2,14 @@
 @config "../tailwind.config.js";
 
 :root {
-  --brand-primary: #0f172a;
-  --brand-primary-soft: #1e293b;
+  --brand-primary: #071426;
+  --brand-primary-soft: #12243a;
   --brand-accent: #d4af37;
   --brand-accent-soft: #f8f0cf;
-  --brand-background: #f8fafc;
+  --brand-background: #f7f8fb;
   --brand-surface: #ffffff;
-  --brand-muted: #64748b;
-  --brand-border: #e2e8f0;
+  --brand-muted: #697386;
+  --brand-border: #dfe5ee;
 }
 
 @theme {
@@ -40,7 +40,7 @@ body {
   min-width: 320px;
   color: var(--brand-primary);
   background:
-    radial-gradient(circle at 10% 0%, rgb(212 175 55 / 0.08), transparent 32%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.86), rgb(247 248 251 / 0.94)),
     var(--brand-background);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -56,6 +56,14 @@ a {
   font: inherit;
 }
 
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
 #root {
   min-height: 100vh;
 }
@@ -67,4 +75,26 @@ section {
 ::selection {
   color: var(--brand-primary);
   background: rgb(212 175 55 / 0.35);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.mm-cursor-enabled,
+  html.mm-cursor-enabled a,
+  html.mm-cursor-enabled button,
+  html.mm-cursor-enabled input,
+  html.mm-cursor-enabled select,
+  html.mm-cursor-enabled textarea,
+  html.mm-cursor-enabled [role="button"] {
+    cursor: none;
+  }
+}
+
+@keyframes gold-shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(120%);
+  }
 }
