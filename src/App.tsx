@@ -6,8 +6,9 @@ import {
   type ReactNode,
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
+import { ManagerChat } from './components/pages/ManagerChat'
 import { About } from './components/sections/About'
 import { Contacts } from './components/sections/Contacts'
 import { FinalSlogan } from './components/sections/FinalSlogan'
@@ -70,6 +71,30 @@ function DocumentLanguage() {
   return null
 }
 
+function ScrollToHash() {
+  const { hash, pathname } = useLocation()
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+
+      return undefined
+    }
+
+    const targetId = decodeURIComponent(hash.slice(1))
+    const timer = window.setTimeout(() => {
+      document.getElementById(targetId)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 80)
+
+    return () => window.clearTimeout(timer)
+  }, [hash, pathname])
+
+  return null
+}
+
 function LandingPage() {
   return (
     <Layout>
@@ -85,12 +110,22 @@ function LandingPage() {
   )
 }
 
+function ChatPage() {
+  return (
+    <Layout>
+      <ManagerChat />
+    </Layout>
+  )
+}
+
 function App() {
   return (
     <ErrorBoundary>
       <DocumentLanguage />
+      <ScrollToHash />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/chat" element={<ChatPage />} />
         <Route path="*" element={<LandingPage />} />
       </Routes>
     </ErrorBoundary>

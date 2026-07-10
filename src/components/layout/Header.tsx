@@ -2,12 +2,20 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, Phone, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link, useLocation, type To } from 'react-router-dom'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
 const logoUrl = new URL('../../assets/images/mm-finance-logo.svg', import.meta.url).href
 
+type NavItem = {
+  label: string
+  targetId?: string
+  to: To
+}
+
 export function Header() {
   const { t } = useTranslation()
+  const location = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const phoneHref = t('contacts.phoneHref')
@@ -49,26 +57,58 @@ export function Header() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isMenuOpen])
 
-  const navItems = [
-    { href: '#about', label: t('nav.about') },
-    { href: '#services', label: t('nav.services') },
-    { href: '#why-us', label: t('nav.whyUs') },
-    { href: '#contacts', label: t('nav.contacts') },
+  const navItems: NavItem[] = [
+    { label: t('nav.about'), targetId: 'about', to: { pathname: '/', hash: '#about' } },
+    {
+      label: t('nav.services'),
+      targetId: 'services',
+      to: { pathname: '/', hash: '#services' },
+    },
+    {
+      label: t('nav.whyUs'),
+      targetId: 'why-us',
+      to: { pathname: '/', hash: '#why-us' },
+    },
+    { label: t('nav.contacts'), targetId: 'contacts', to: { pathname: '/', hash: '#contacts' } },
+    { label: t('nav.chat'), to: '/chat' },
   ]
 
-  const renderNavLink = (href: string, label: string, isMobile = false) => (
-    <a
-      className={`group relative inline-flex min-h-10 items-center font-medium text-muted transition hover:text-primary ${
+  const handleNavClick = (targetId?: string) => {
+    setIsMenuOpen(false)
+
+    if (targetId && location.pathname === '/') {
+      window.setTimeout(() => {
+        document.getElementById(targetId)?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+      }, 0)
+    }
+  }
+
+  const renderNavLink = ({ label, targetId, to }: NavItem, isMobile = false) => {
+    const isActive = to === '/chat' && location.pathname === '/chat'
+
+    return (
+      <Link
+        className={`group relative inline-flex min-h-10 items-center font-medium transition hover:text-primary ${
+          isActive ? 'text-primary' : 'text-muted'
+        } ${
         isMobile ? 'py-3 text-lg' : 'text-sm'
       }`}
-      href={href}
-      key={href}
-      onClick={() => setIsMenuOpen(false)}
-    >
-      <span>{label}</span>
-      <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 rounded-full bg-accent transition-transform duration-300 group-hover:scale-x-100" />
-    </a>
-  )
+        key={label}
+        onClick={() => handleNavClick(targetId)}
+        to={to}
+      >
+        <span>{label}</span>
+        <span
+          className={`absolute -bottom-1 left-0 h-0.5 w-full origin-left rounded-full bg-accent transition-transform duration-300 ${
+            isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+          }`}
+        />
+      </Link>
+    )
+  }
 
   return (
     <header
@@ -79,11 +119,11 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <a
+        <Link
           aria-label={t('brand.name')}
           className="group flex items-center gap-3 text-primary"
-          href="#home"
-          onClick={() => setIsMenuOpen(false)}
+          onClick={() => handleNavClick('home')}
+          to={{ pathname: '/', hash: '#home' }}
         >
           <span className="flex h-12 w-28 items-center justify-center rounded-2xl bg-primary px-2 shadow-soft ring-1 ring-white/20 sm:w-32">
             <img
@@ -101,13 +141,13 @@ export function Header() {
               {t('brand.descriptor')}
             </span>
           </span>
-        </a>
+        </Link>
 
         <nav
           aria-label={t('nav.mainNavigation')}
           className="hidden items-center justify-center gap-7 md:flex"
         >
-          {navItems.map((item) => renderNavLink(item.href, item.label))}
+          {navItems.map((item) => renderNavLink(item))}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -157,9 +197,7 @@ export function Header() {
                 aria-label={t('nav.mainNavigation')}
                 className="flex flex-col"
               >
-                {navItems.map((item) =>
-                  renderNavLink(item.href, item.label, true),
-                )}
+                {navItems.map((item) => renderNavLink(item, true))}
               </nav>
               <a
                 aria-label={t('contacts.callLabel')}
