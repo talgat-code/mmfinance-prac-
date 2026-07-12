@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
-import { MapPin, MessageCircle, Phone } from 'lucide-react'
+import { MapPin, MessageCircle, MessagesSquare, Phone } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 const logoUrl = new URL('../../assets/images/mm-finance-logo.svg', import.meta.url).href
 
@@ -33,10 +34,10 @@ export function Footer() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,_rgb(212_175_55_/_0.18),_transparent_28%),linear-gradient(180deg,_rgb(255_255_255_/_0.03),_transparent)]" />
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.1fr_0.9fr_0.6fr] lg:px-8">
         <div>
-          <a
+          <Link
             aria-label={t('brand.name')}
             className="inline-flex items-center gap-3"
-            href="#home"
+            to={{ pathname: '/', hash: '#home' }}
           >
             <span className="flex h-14 w-36 items-center justify-center rounded-2xl bg-white/8 px-2 ring-1 ring-white/10">
               <img
@@ -52,7 +53,7 @@ export function Footer() {
                 {t('brand.descriptor')}
               </span>
             </span>
-          </a>
+          </Link>
           <p className="mt-5 max-w-md text-sm leading-7 text-white/68">
             {t('footer.tagline')}
           </p>
@@ -91,7 +92,14 @@ export function Footer() {
           <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-accent">
             {t('footer.quickContactTitle')}
           </h3>
-          <div className="mt-5">
+          <div className="mt-5 flex gap-2">
+            <Link
+              aria-label={t('chat.title')}
+              className="inline-flex size-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+              to="/chat"
+            >
+              <MessagesSquare aria-hidden="true" className="size-5" />
+            </Link>
             <a
               aria-label={t('contacts.whatsappAriaLabel')}
               className="inline-flex size-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"

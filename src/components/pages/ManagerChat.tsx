@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import type { FormEvent } from 'react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import type { ChangeEvent, FocusEvent, FormEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import {
@@ -10,6 +10,7 @@ import {
   FileCheck2,
   MessageCircle,
   PhoneCall,
+  RotateCcw,
   Send,
   ShieldCheck,
   Sparkles,
@@ -42,11 +43,30 @@ type ChatStep = {
   text: string
 }
 
+type LeadFormValues = {
+  name: string
+  phone: string
+}
+
+type LeadFormTouched = Record<keyof LeadFormValues, boolean>
+
 const actionCards = [
   { icon: WalletCards, key: 'programs' },
   { icon: FileCheck2, key: 'documents' },
   { icon: ShieldCheck, key: 'decision' },
 ] as const
+
+const phonePattern = /^[\d+()\s-]+$/
+
+const initialLeadFormValues: LeadFormValues = {
+  name: '',
+  phone: '',
+}
+
+const initialLeadFormTouched: LeadFormTouched = {
+  name: false,
+  phone: false,
+}
 
 const createMessageId = (role: MessageRole) =>
   `${role}-${Date.now()}-${Math.random().toString(36).slice(2)}`
@@ -66,6 +86,10 @@ export function ManagerChat() {
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [isTouched, setIsTouched] = useState(false)
+  const [leadValues, setLeadValues] = useState<LeadFormValues>(initialLeadFormValues)
+  const [leadTouched, setLeadTouched] =
+    useState<LeadFormTouched>(initialLeadFormTouched)
+  const [isLeadSuccessVisible, setIsLeadSuccessVisible] = useState(false)
   const endOfChatRef = useRef<HTMLDivElement>(null)
   const typingTimerRef = useRef<number | undefined>(undefined)
   const quickReplies = t('chat.quickReplies', {
@@ -83,24 +107,41 @@ export function ManagerChat() {
   const whatsappUrl = `https://wa.me/${whatsappHref}?text=${encodeURIComponent(
     t('chat.whatsappTemplate'),
   )}`
+  const trimmedLeadName = leadValues.name.trim()
+  const trimmedLeadPhone = leadValues.phone.trim()
+  const isLeadPhoneValid =
+    trimmedLeadPhone.length > 0 && phonePattern.test(trimmedLeadPhone)
+  const isLeadFormValid = trimmedLeadName.length > 0 && isLeadPhoneValid
+  const leadNameError =
+    leadTouched.name && trimmedLeadName.length === 0
+      ? t('chat.leadForm.nameRequired')
+      : ''
+  const leadPhoneError =
+    leadTouched.phone && trimmedLeadPhone.length === 0
+      ? t('chat.leadForm.phoneRequired')
+      : leadTouched.phone && trimmedLeadPhone.length > 0 && !isLeadPhoneValid
+        ? t('chat.leadForm.phoneInvalid')
+        : ''
 
-  useEffect(() => {
+  const createInitialMessages = useCallback(() => {
     const initialMessages = t('chat.initialMessages', {
       returnObjects: true,
     }) as string[]
 
-    setMessages(
-      initialMessages.map((text, index) => ({
-        id: `manager-initial-${locale}-${index}`,
-        role: 'manager',
-        text,
-        time: timeFormatter.format(new Date()),
-      })),
-    )
+    return initialMessages.map((text, index) => ({
+      id: `manager-initial-${locale}-${index}`,
+      role: 'manager' as const,
+      text,
+      time: timeFormatter.format(new Date()),
+    }))
+  }, [locale, t, timeFormatter])
+
+  useEffect(() => {
+    setMessages(createInitialMessages())
     setIsTyping(false)
     setInputValue('')
     setIsTouched(false)
-  }, [locale, t, timeFormatter])
+  }, [createInitialMessages])
 
   useEffect(
     () => () => {
@@ -112,8 +153,40 @@ export function ManagerChat() {
   )
 
   useEffect(() => {
+    if (!isLeadSuccessVisible) {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => setIsLeadSuccessVisible(false), 3500)
+
+    return () => window.clearTimeout(timer)
+  }, [isLeadSuccessVisible])
+
+  useEffect(() => {
     endOfChatRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [isTyping, messages])
+
+  const buildTranscript = useCallback(() => {
+    if (messages.length === 0) {
+      return t('chat.emptyTranscript')
+    }
+
+    return messages
+      .map((message) => {
+        const author =
+          message.role === 'client' ? t('chat.clientLabel') : t('chat.managerLabel')
+
+        return `${author}: ${message.text}`
+      })
+      .join('\n')
+  }, [messages, t])
+
+  const transcriptWhatsappUrl = `https://wa.me/${whatsappHref}?text=${encodeURIComponent(
+    t('chat.whatsappTranscriptTemplate').replaceAll(
+      '{transcript}',
+      buildTranscript(),
+    ),
+  )}`
 
   const findManagerReply = (message: string) => {
     const normalizedMessage = message.toLowerCase()
@@ -169,6 +242,55 @@ export function ManagerChat() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     sendMessage(inputValue)
+  }
+
+  const resetChat = () => {
+    if (typingTimerRef.current) {
+      window.clearTimeout(typingTimerRef.current)
+    }
+
+    setMessages(createInitialMessages())
+    setInputValue('')
+    setIsTouched(false)
+    setIsTyping(false)
+  }
+
+  const handleLeadChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const field = event.target.name as keyof LeadFormValues
+
+    setLeadValues((currentValues) => ({
+      ...currentValues,
+      [field]: event.target.value,
+    }))
+    setIsLeadSuccessVisible(false)
+  }
+
+  const handleLeadBlur = (event: FocusEvent<HTMLInputElement>) => {
+    const field = event.target.name as keyof LeadFormValues
+
+    setLeadTouched((currentTouched) => ({
+      ...currentTouched,
+      [field]: true,
+    }))
+  }
+
+  const handleLeadSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (!isLeadFormValid) {
+      setLeadTouched({ name: true, phone: true })
+
+      return
+    }
+
+    const message = t('chat.leadForm.whatsappTemplate')
+      .replaceAll('{name}', trimmedLeadName)
+      .replaceAll('{phone}', trimmedLeadPhone)
+      .replaceAll('{transcript}', buildTranscript())
+    const url = `https://wa.me/${whatsappHref}?text=${encodeURIComponent(message)}`
+
+    window.open(url, '_blank', 'noopener,noreferrer')
+    setIsLeadSuccessVisible(true)
   }
 
   return (
@@ -319,6 +441,27 @@ export function ManagerChat() {
                 ))}
               </div>
 
+              <div className="mb-4 grid gap-2 sm:grid-cols-2">
+                <a
+                  aria-label={t('chat.actions.sendTranscriptAriaLabel')}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+                  href={transcriptWhatsappUrl}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <MessageCircle aria-hidden="true" className="size-4" />
+                  {t('chat.actions.sendTranscript')}
+                </a>
+                <button
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+                  onClick={resetChat}
+                  type="button"
+                >
+                  <RotateCcw aria-hidden="true" className="size-4" />
+                  {t('chat.actions.restart')}
+                </button>
+              </div>
+
               <form className="grid gap-3 sm:grid-cols-[1fr_auto]" onSubmit={handleSubmit}>
                 <div>
                   <label className="sr-only" htmlFor="manager-chat-message">
@@ -437,6 +580,104 @@ export function ManagerChat() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className="rounded-[1.5rem] border border-white/70 bg-surface/92 p-6 shadow-soft ring-1 ring-primary/5 backdrop-blur">
+            <h2 className="text-xl font-black text-primary">
+              {t('chat.leadForm.title')}
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              {t('chat.leadForm.description')}
+            </p>
+
+            <form className="mt-5 grid gap-4" noValidate onSubmit={handleLeadSubmit}>
+              <div>
+                <label
+                  className="text-sm font-semibold text-primary"
+                  htmlFor="chat-lead-name"
+                >
+                  {t('chat.leadForm.nameLabel')}
+                </label>
+                <input
+                  aria-describedby={leadNameError ? 'chat-lead-name-error' : undefined}
+                  aria-invalid={Boolean(leadNameError)}
+                  autoComplete="name"
+                  className="mt-2 min-h-12 w-full rounded-xl border border-border bg-white px-4 text-primary outline-none transition placeholder:text-muted/60 focus:border-accent focus:ring-4 focus:ring-accent/15"
+                  id="chat-lead-name"
+                  name="name"
+                  onBlur={handleLeadBlur}
+                  onChange={handleLeadChange}
+                  placeholder={t('chat.leadForm.namePlaceholder')}
+                  required
+                  type="text"
+                  value={leadValues.name}
+                />
+                {leadNameError ? (
+                  <p
+                    className="mt-2 text-sm font-semibold text-red-700"
+                    id="chat-lead-name-error"
+                  >
+                    {leadNameError}
+                  </p>
+                ) : null}
+              </div>
+
+              <div>
+                <label
+                  className="text-sm font-semibold text-primary"
+                  htmlFor="chat-lead-phone"
+                >
+                  {t('chat.leadForm.phoneLabel')}
+                </label>
+                <input
+                  aria-describedby={leadPhoneError ? 'chat-lead-phone-error' : undefined}
+                  aria-invalid={Boolean(leadPhoneError)}
+                  autoComplete="tel"
+                  className="mt-2 min-h-12 w-full rounded-xl border border-border bg-white px-4 text-primary outline-none transition placeholder:text-muted/60 focus:border-accent focus:ring-4 focus:ring-accent/15"
+                  id="chat-lead-phone"
+                  inputMode="tel"
+                  name="phone"
+                  onBlur={handleLeadBlur}
+                  onChange={handleLeadChange}
+                  placeholder={t('chat.leadForm.phonePlaceholder')}
+                  required
+                  type="tel"
+                  value={leadValues.phone}
+                />
+                {leadPhoneError ? (
+                  <p
+                    className="mt-2 text-sm font-semibold text-red-700"
+                    id="chat-lead-phone-error"
+                  >
+                    {leadPhoneError}
+                  </p>
+                ) : null}
+              </div>
+
+              <button
+                aria-label={t('chat.leadForm.submitAriaLabel')}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#c9a12f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
+                disabled={!isLeadFormValid}
+                type="submit"
+              >
+                {t('chat.leadForm.submit')}
+                <Send aria-hidden="true" className="size-4" />
+              </button>
+
+              {isLeadSuccessVisible ? (
+                <p
+                  aria-live="polite"
+                  className="flex items-center gap-2 text-sm font-semibold text-emerald-700"
+                >
+                  <CheckCircle2 aria-hidden="true" className="size-4" />
+                  {t('chat.leadForm.success')}
+                </p>
+              ) : null}
+
+              <p className="text-xs leading-5 text-muted">
+                {t('chat.leadForm.note')}
+              </p>
+            </form>
           </div>
 
           <div className="grid gap-3 rounded-[1.5rem] bg-primary p-5 text-white shadow-[0_24px_80px_rgb(7_20_38_/_0.18)]">
