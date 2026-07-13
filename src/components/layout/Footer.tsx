@@ -3,7 +3,8 @@ import { MapPin, MessageCircle, MessagesSquare, Phone } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-const logoUrl = new URL('../../assets/images/mm-finance-logo.svg', import.meta.url).href
+const logoUrl = new URL('../../assets/images/mm-finance-logo-cropped.jpg', import.meta.url)
+  .href
 
 type FooterContact = {
   icon: LucideIcon
@@ -39,11 +40,11 @@ export function Footer() {
             className="inline-flex items-center gap-3"
             to={{ pathname: '/', hash: '#home' }}
           >
-            <span className="flex h-14 w-36 items-center justify-center rounded-2xl bg-white/8 px-2 ring-1 ring-white/10">
+            <span className="flex h-20 w-28 items-center justify-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-[0_18px_50px_rgb(0_0_0_/_0.18)] ring-1 ring-white/20">
               <img
                 alt=""
                 aria-hidden="true"
-                className="h-12 w-full object-contain"
+                className="h-full w-full rounded-xl object-contain"
                 src={logoUrl}
               />
             </span>
@@ -68,12 +69,12 @@ export function Footer() {
           </h3>
           <ul className="mt-5 space-y-4 text-sm text-white/72">
             {contacts.map(({ ariaLabel, external, href, icon: Icon, text }) => (
-              <li className="flex items-start gap-3" key={text}>
-                <Icon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent" />
+              <li className="flex items-center gap-3" key={text}>
+                <Icon aria-hidden="true" className="size-4 shrink-0 text-accent" />
                 {href ? (
                   <a
                     aria-label={ariaLabel}
-                    className="inline-flex min-h-10 items-center transition hover:text-accent"
+                    className="inline-flex min-h-8 items-center leading-6 transition hover:text-accent"
                     href={href}
                     rel={external ? 'noreferrer' : undefined}
                     target={external ? '_blank' : undefined}

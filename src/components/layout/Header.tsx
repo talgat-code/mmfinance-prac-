@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { Link, useLocation, type To } from 'react-router-dom'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
-const logoUrl = new URL('../../assets/images/mm-finance-logo.svg', import.meta.url).href
+const logoUrl = new URL('../../assets/images/mm-finance-logo-cropped.jpg', import.meta.url)
+  .href
 
 type NavItem = {
   label: string
@@ -125,11 +126,11 @@ export function Header() {
           onClick={() => handleNavClick('home')}
           to={{ pathname: '/', hash: '#home' }}
         >
-          <span className="flex h-12 w-28 items-center justify-center rounded-2xl bg-primary px-2 shadow-soft ring-1 ring-white/20 sm:w-32">
+          <span className="flex h-14 w-20 items-center justify-center overflow-hidden rounded-2xl border border-border bg-white p-1.5 shadow-soft ring-1 ring-primary/5 sm:w-24">
             <img
               alt=""
               aria-hidden="true"
-              className="h-10 w-full object-contain"
+              className="h-full w-full rounded-xl object-contain"
               src={logoUrl}
             />
           </span>
@@ -153,10 +154,10 @@ export function Header() {
         <div className="flex items-center gap-2">
           <a
             aria-label={t('contacts.callLabel')}
-            className="hidden min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-sm transition hover:bg-primary-soft lg:inline-flex"
+            className="hidden min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-sm transition hover:bg-primary-soft lg:inline-flex"
             href={`tel:${phoneHref}`}
           >
-            <Phone aria-hidden="true" className="size-4 text-accent" />
+            <Phone aria-hidden="true" className="size-4 shrink-0 text-accent" />
             {t('contacts.phone')}
           </a>
           <div className="hidden sm:block">
@@ -201,10 +202,10 @@ export function Header() {
               </nav>
               <a
                 aria-label={t('contacts.callLabel')}
-                className="mt-4 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-bold text-white"
+                className="mt-4 inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-4 text-sm font-bold text-white"
                 href={`tel:${phoneHref}`}
               >
-                <Phone aria-hidden="true" className="size-4 text-accent" />
+                <Phone aria-hidden="true" className="size-4 shrink-0 text-accent" />
                 {t('contacts.phone')}
               </a>
             </div>
