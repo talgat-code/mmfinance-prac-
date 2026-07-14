@@ -20,6 +20,18 @@ export default {
       boxShadow: {
         soft: '0 24px 80px rgb(15 23 42 / 0.08)',
       },
+      fontFamily: {
+        sans: [
+          'Manrope',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'sans-serif',
+        ],
+        display: ['"Noto Serif"', 'Georgia', '"Times New Roman"', 'serif'],
+      },
     },
   },
 }
