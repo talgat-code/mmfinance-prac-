@@ -90,6 +90,7 @@ export function ManagerChat() {
   const [leadTouched, setLeadTouched] =
     useState<LeadFormTouched>(initialLeadFormTouched)
   const [isLeadSuccessVisible, setIsLeadSuccessVisible] = useState(false)
+  const messageInputRef = useRef<HTMLInputElement>(null)
   const endOfChatRef = useRef<HTMLDivElement>(null)
   const typingTimerRef = useRef<number | undefined>(undefined)
   const quickReplies = t('chat.quickReplies', {
@@ -197,11 +198,16 @@ export function ManagerChat() {
     return matchedReply?.response ?? t('chat.fallbackReply')
   }
 
+  const focusMessageInput = () => {
+    window.setTimeout(() => messageInputRef.current?.focus(), 0)
+  }
+
   const sendMessage = (message: string, preparedResponse?: string) => {
     const trimmedMessage = message.trim()
 
     if (!trimmedMessage) {
       setIsTouched(true)
+      focusMessageInput()
 
       return
     }
@@ -236,6 +242,7 @@ export function ManagerChat() {
         },
       ])
       setIsTyping(false)
+      focusMessageInput()
     }, 850)
   }
 
@@ -253,6 +260,7 @@ export function ManagerChat() {
     setInputValue('')
     setIsTouched(false)
     setIsTyping(false)
+    focusMessageInput()
   }
 
   const handleLeadChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -335,15 +343,37 @@ export function ManagerChat() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-emerald-300/25 bg-emerald-400/12 px-3 text-xs font-bold text-emerald-100">
-                  <span className="size-2 rounded-full bg-emerald-300" />
-                  {t('chat.onlineStatus')}
-                </span>
-                <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 text-xs font-bold text-white/72">
-                  <Clock3 aria-hidden="true" className="size-4 text-accent" />
-                  {t('chat.responseTime')}
-                </span>
+              <div className="flex flex-col gap-2 sm:items-end">
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-emerald-300/25 bg-emerald-400/12 px-3 text-xs font-bold text-emerald-100">
+                    <span className="size-2 rounded-full bg-emerald-300" />
+                    {t('chat.onlineStatus')}
+                  </span>
+                  <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 text-xs font-bold text-white/72">
+                    <Clock3 aria-hidden="true" className="size-4 text-accent" />
+                    {t('chat.responseTime')}
+                  </span>
+                </div>
+                <div className="grid w-full gap-2 sm:w-auto sm:grid-cols-2">
+                  <a
+                    aria-label={t('contacts.whatsappAriaLabel')}
+                    className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent px-3 text-xs font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#c9a12f]"
+                    href={whatsappUrl}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <MessageCircle aria-hidden="true" className="size-4" />
+                    {t('chat.actions.whatsapp')}
+                  </a>
+                  <a
+                    aria-label={t('contacts.callLabel')}
+                    className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-white/12 bg-white/10 px-3 text-xs font-black text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+                    href={`tel:${phoneHref}`}
+                  >
+                    <PhoneCall aria-hidden="true" className="size-4" />
+                    {t('chat.actions.call')}
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -479,6 +509,7 @@ export function ManagerChat() {
                     onBlur={() => setIsTouched(true)}
                     onChange={(event) => setInputValue(event.target.value)}
                     placeholder={t('chat.inputPlaceholder')}
+                    ref={messageInputRef}
                     type="text"
                     value={inputValue}
                   />

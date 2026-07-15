@@ -85,7 +85,7 @@ export function SmoothCursor() {
           opacity: isVisible ? 1 : 0,
           scale: isInteractive ? (isPressed ? 1.05 : 1.45) : isPressed ? 0.75 : 1,
         }}
-        className="pointer-events-none fixed z-[9999] h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent/70 bg-accent/10 shadow-[0_0_32px_rgb(212_175_55_/_0.3)]"
+        className="pointer-events-none fixed z-[9999] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/14 blur-[1px] shadow-[0_0_28px_rgb(212_175_55_/_0.28)]"
         style={{ left: ringX, top: ringY }}
         transition={{ duration: 0.18, ease: 'easeOut' }}
       />
