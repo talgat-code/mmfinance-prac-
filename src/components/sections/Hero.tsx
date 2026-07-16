@@ -141,7 +141,7 @@ export function Hero() {
           transition={{ delay: 0.12, duration: 0.65, ease: 'easeOut' }}
         >
           <div className="relative overflow-hidden rounded-[2rem] bg-primary p-5 text-white shadow-[0_36px_120px_rgb(15_23_42_/_0.28)]">
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,_rgb(212_175_55_/_0.28),_transparent_42%),linear-gradient(180deg,_rgb(255_255_255_/_0.08),_transparent)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,_rgb(34_197_94_/_0.28),_transparent_42%),linear-gradient(180deg,_rgb(255_255_255_/_0.08),_transparent)]" />
             <div className="relative rounded-[1.5rem] border border-white/10 bg-white/8 p-6 backdrop-blur">
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -152,7 +152,7 @@ export function Hero() {
                     {t('hero.tagline')}
                   </h2>
                 </div>
-                <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-primary shadow-[0_16px_45px_rgb(212_175_55_/_0.22)]">
+                <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-primary shadow-[0_16px_45px_rgb(34_197_94_/_0.22)]">
                   <CircleCheck aria-hidden="true" className="size-7" />
                 </span>
               </div>
@@ -178,7 +178,7 @@ export function Hero() {
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 <a
                   aria-label={t('contacts.callLabel')}
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-bold text-primary transition hover:bg-[#c9a12f]"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-bold text-primary transition hover:bg-[#16a34a]"
                   href={`tel:${phoneHref}`}
                 >
                   <PhoneCall aria-hidden="true" className="size-4" />

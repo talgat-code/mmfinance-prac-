@@ -79,7 +79,7 @@ type ManagerAvatarProps = {
 function ManagerAvatar({ compact = false }: ManagerAvatarProps) {
   return (
     <span
-      className={`relative flex shrink-0 items-center justify-center overflow-hidden bg-[linear-gradient(135deg,_#fff7d6,_#d4af37_52%,_#f8f0cf)] text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.22)] ring-1 ring-white/30 ${
+      className={`relative flex shrink-0 items-center justify-center overflow-hidden bg-[linear-gradient(135deg,_#ecfdf5,_#22c55e_52%,_#dcfce7)] text-primary shadow-[0_18px_45px_rgb(34_197_94_/_0.22)] ring-1 ring-white/30 ${
         compact ? 'mt-1 size-9 rounded-xl' : 'size-14 rounded-2xl'
       }`}
     >
@@ -383,7 +383,7 @@ export function ManagerChat() {
                 <div className="grid w-full gap-2 sm:w-auto sm:grid-cols-2">
                   <a
                     aria-label={t('contacts.whatsappAriaLabel')}
-                    className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent px-3 text-xs font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#c9a12f]"
+                    className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent px-3 text-xs font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
                     href={whatsappUrl}
                     rel="noreferrer"
                     target="_blank"
@@ -544,7 +544,7 @@ export function ManagerChat() {
                 </div>
                 <button
                   aria-label={t('chat.sendAriaLabel')}
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#c9a12f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(34_197_94_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#16a34a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
                   disabled={isTyping}
                   type="submit"
                 >
@@ -596,7 +596,7 @@ export function ManagerChat() {
           </div>
 
           <div className="relative overflow-hidden rounded-[1.5rem] bg-primary p-6 text-white shadow-[0_24px_80px_rgb(7_20_38_/_0.18)]">
-            <div className="absolute inset-0 bg-[linear-gradient(145deg,_rgb(212_175_55_/_0.22),_transparent_46%),linear-gradient(180deg,_rgb(255_255_255_/_0.06),_transparent)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(145deg,_rgb(34_197_94_/_0.22),_transparent_46%),linear-gradient(180deg,_rgb(255_255_255_/_0.06),_transparent)]" />
             <div className="relative flex items-start gap-4">
               <ManagerAvatar />
               <div>
@@ -739,7 +739,7 @@ export function ManagerChat() {
 
               <button
                 aria-label={t('chat.leadForm.submitAriaLabel')}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#c9a12f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(34_197_94_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#16a34a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
                 disabled={!isLeadFormValid}
                 type="submit"
               >
@@ -766,7 +766,7 @@ export function ManagerChat() {
           <div className="grid gap-3 rounded-[1.5rem] bg-primary p-5 text-white shadow-[0_24px_80px_rgb(7_20_38_/_0.18)]">
             <a
               aria-label={t('contacts.whatsappAriaLabel')}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-sm font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#c9a12f]"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-sm font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
               href={whatsappUrl}
               rel="noreferrer"
               target="_blank"

@@ -139,7 +139,7 @@ export function Contacts() {
       className="relative overflow-hidden bg-surface py-20 sm:py-24"
       id="contacts"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,_rgb(212_175_55_/_0.16),_transparent_26%),linear-gradient(180deg,_transparent,_rgb(15_23_42_/_0.04))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,_rgb(34_197_94_/_0.16),_transparent_26%),linear-gradient(180deg,_transparent,_rgb(15_23_42_/_0.04))]" />
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionReveal>
           <SectionHeading
@@ -190,7 +190,7 @@ export function Contacts() {
           <SectionReveal>
             <Card className="h-full overflow-hidden p-0">
               <div className="relative flex min-h-80 flex-col justify-end overflow-hidden rounded-2xl bg-primary p-6 text-white">
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,_rgb(212_175_55_/_0.28),_transparent_42%),radial-gradient(circle_at_80%_20%,_rgb(255_255_255_/_0.16),_transparent_28%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,_rgb(34_197_94_/_0.28),_transparent_42%),radial-gradient(circle_at_80%_20%,_rgb(255_255_255_/_0.16),_transparent_28%)]" />
                 <div className="absolute left-8 top-8 grid grid-cols-3 gap-2 opacity-40">
                   {Array.from({ length: 18 }).map((_, index) => (
                     <span
@@ -285,7 +285,7 @@ export function Contacts() {
 
                 <button
                   aria-label={t('contacts.form.submitAriaLabel')}
-                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#c9a12f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
+                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-primary shadow-[0_18px_45px_rgb(34_197_94_/_0.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#16a34a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
                   disabled={!isFormValid}
                   id="contact-form-submit"
                   type="submit"

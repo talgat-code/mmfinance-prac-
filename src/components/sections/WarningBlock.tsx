@@ -11,7 +11,7 @@ export function WarningBlock() {
         <SectionReveal>
           <div className="overflow-hidden rounded-[1.5rem] border border-accent/60 bg-primary p-5 text-white shadow-[0_28px_90px_rgb(15_23_42_/_0.2)]">
             <div className="flex flex-col gap-5 rounded-[1.1rem] border border-white/10 bg-white/8 p-5 sm:flex-row sm:items-start sm:p-6">
-              <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-primary shadow-[0_16px_45px_rgb(212_175_55_/_0.22)]">
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-primary shadow-[0_16px_45px_rgb(34_197_94_/_0.22)]">
                 <AlertTriangle aria-hidden="true" className="size-7" />
               </span>
               <div>

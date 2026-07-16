@@ -38,7 +38,7 @@ export function Services() {
       className="relative overflow-hidden bg-surface py-20 sm:py-24"
       id="services"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(120deg,_rgb(15_23_42_/_0.04),_transparent_40%),radial-gradient(circle_at_85%_20%,_rgb(212_175_55_/_0.16),_transparent_28%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(120deg,_rgb(15_23_42_/_0.04),_transparent_40%),radial-gradient(circle_at_85%_20%,_rgb(34_197_94_/_0.16),_transparent_28%)]" />
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionReveal>
           <SectionHeading

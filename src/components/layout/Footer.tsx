@@ -32,7 +32,7 @@ export function Footer() {
 
   return (
     <footer className="relative overflow-hidden bg-primary text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,_rgb(212_175_55_/_0.18),_transparent_28%),linear-gradient(180deg,_rgb(255_255_255_/_0.03),_transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,_rgb(34_197_94_/_0.18),_transparent_28%),linear-gradient(180deg,_rgb(255_255_255_/_0.03),_transparent)]" />
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.1fr_0.9fr_0.6fr] lg:px-8">
         <div>
           <Link

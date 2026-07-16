@@ -85,7 +85,7 @@ export function SmoothCursor() {
           opacity: isVisible ? 1 : 0,
           scale: isInteractive ? (isPressed ? 1.05 : 1.45) : isPressed ? 0.75 : 1,
         }}
-        className="pointer-events-none fixed z-[9999] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/14 blur-[1px] shadow-[0_0_28px_rgb(212_175_55_/_0.28)]"
+        className="pointer-events-none fixed z-[9999] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/14 blur-[1px] shadow-[0_0_28px_rgb(34_197_94_/_0.28)]"
         style={{ left: ringX, top: ringY }}
         transition={{ duration: 0.18, ease: 'easeOut' }}
       />
@@ -95,7 +95,7 @@ export function SmoothCursor() {
           opacity: isVisible ? 1 : 0,
           scale: isInteractive ? 0.72 : isPressed ? 1.4 : 1,
         }}
-        className="pointer-events-none fixed z-[10000] h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_16px_rgb(212_175_55_/_0.55)]"
+        className="pointer-events-none fixed z-[10000] h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_16px_rgb(34_197_94_/_0.55)]"
         style={{ left: cursorX, top: cursorY }}
         transition={{ duration: 0.12, ease: 'easeOut' }}
       />

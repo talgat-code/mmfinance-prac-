@@ -116,7 +116,7 @@ export function PromoPanel() {
                       aria-selected={isActive}
                       className={`relative min-h-11 rounded-xl px-4 text-sm font-bold transition ${
                         isActive
-                          ? 'bg-accent text-primary shadow-[0_14px_36px_rgb(212_175_55_/_0.2)]'
+                          ? 'bg-accent text-primary shadow-[0_14px_36px_rgb(34_197_94_/_0.2)]'
                           : 'text-white/72 hover:bg-white/10 hover:text-white'
                       }`}
                       key={tab}
@@ -303,7 +303,7 @@ export function PromoPanel() {
 
               <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 <a
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-bold text-primary transition hover:-translate-y-0.5 hover:bg-[#c9a12f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-bold text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   href="#contacts"
                 >
                   {t('promo.applyButton')}

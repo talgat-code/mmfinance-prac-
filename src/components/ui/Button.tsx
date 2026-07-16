@@ -8,7 +8,7 @@ type ButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    'bg-accent text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.28)] hover:-translate-y-0.5 hover:bg-[#c9a12f]',
+    'bg-accent text-primary shadow-[0_18px_45px_rgb(34_197_94_/_0.28)] hover:-translate-y-0.5 hover:bg-[#16a34a]',
   secondary:
     'border border-primary/15 bg-surface text-primary hover:-translate-y-0.5 hover:border-accent hover:text-primary hover:shadow-soft',
   dark: 'bg-primary text-white shadow-soft hover:-translate-y-0.5 hover:bg-primary-soft',

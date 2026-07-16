@@ -1,21 +1,21 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="#0f172a"/>
-  <rect x="44" y="44" width="1112" height="542" rx="40" fill="#111c33" stroke="#d4af37" stroke-opacity="0.38" stroke-width="2"/>
-  <circle cx="1020" cy="76" r="190" fill="#d4af37" opacity="0.12"/>
-  <circle cx="150" cy="555" r="210" fill="#d4af37" opacity="0.08"/>
+  <rect x="44" y="44" width="1112" height="542" rx="40" fill="#111c33" stroke="#22c55e" stroke-opacity="0.38" stroke-width="2"/>
+  <circle cx="1020" cy="76" r="190" fill="#22c55e" opacity="0.12"/>
+  <circle cx="150" cy="555" r="210" fill="#22c55e" opacity="0.08"/>
 
   <g transform="translate(96 88)">
     <rect width="288" height="92" rx="18" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.12"/>
     <path d="M28 62V24H43L57 52L71 24H86V62H74V43L64 62H50L40 43V62H28Z" fill="#f8fafc"/>
     <path d="M102 62V24H117L131 52L145 24H160V62H148V43L138 62H124L114 43V62H102Z" fill="#e2e8f0"/>
-    <rect x="55" y="50" width="5" height="12" rx="1.5" fill="#d4af37"/>
-    <rect x="64" y="43" width="5" height="19" rx="1.5" fill="#d4af37"/>
-    <rect x="73" y="35" width="5" height="27" rx="1.5" fill="#d4af37"/>
-    <path d="M176 58C200 50 220 36 242 18" stroke="#d4af37" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M226 18H246V38" stroke="#d4af37" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="55" y="50" width="5" height="12" rx="1.5" fill="#22c55e"/>
+    <rect x="64" y="43" width="5" height="19" rx="1.5" fill="#22c55e"/>
+    <rect x="73" y="35" width="5" height="27" rx="1.5" fill="#22c55e"/>
+    <path d="M176 58C200 50 220 36 242 18" stroke="#22c55e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M226 18H246V38" stroke="#22c55e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <text x="96" y="248" fill="#d4af37" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="800">
+  <text x="96" y="248" fill="#22c55e" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="800">
     MM Finance Consulting
   </text>
   <text x="96" y="326" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="900">
@@ -29,10 +29,10 @@
   </text>
 
   <g transform="translate(760 250)">
-    <rect x="0" y="210" width="42" height="92" rx="10" fill="#d4af37"/>
-    <rect x="72" y="162" width="42" height="140" rx="10" fill="#d4af37"/>
-    <rect x="144" y="108" width="42" height="194" rx="10" fill="#d4af37"/>
-    <rect x="216" y="54" width="42" height="248" rx="10" fill="#d4af37"/>
+    <rect x="0" y="210" width="42" height="92" rx="10" fill="#22c55e"/>
+    <rect x="72" y="162" width="42" height="140" rx="10" fill="#22c55e"/>
+    <rect x="144" y="108" width="42" height="194" rx="10" fill="#22c55e"/>
+    <rect x="216" y="54" width="42" height="248" rx="10" fill="#22c55e"/>
     <path d="M10 165C88 134 160 84 268 0" stroke="#fff8d6" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M214 0H274V60" stroke="#fff8d6" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
