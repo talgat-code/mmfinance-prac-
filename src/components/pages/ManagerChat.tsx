@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
+  BadgeCheck,
+  Bot,
   CheckCircle2,
   Clock3,
   FileCheck2,
@@ -14,7 +16,6 @@ import {
   Send,
   ShieldCheck,
   Sparkles,
-  UserRound,
   WalletCards,
 } from 'lucide-react'
 
@@ -71,6 +72,30 @@ const initialLeadFormTouched: LeadFormTouched = {
 const createMessageId = (role: MessageRole) =>
   `${role}-${Date.now()}-${Math.random().toString(36).slice(2)}`
 
+type ManagerAvatarProps = {
+  compact?: boolean
+}
+
+function ManagerAvatar({ compact = false }: ManagerAvatarProps) {
+  return (
+    <span
+      className={`relative flex shrink-0 items-center justify-center overflow-hidden bg-[linear-gradient(135deg,_#fff7d6,_#d4af37_52%,_#f8f0cf)] text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.22)] ring-1 ring-white/30 ${
+        compact ? 'mt-1 size-9 rounded-xl' : 'size-14 rounded-2xl'
+      }`}
+    >
+      <span className="absolute inset-0 bg-[linear-gradient(145deg,_rgb(255_255_255_/_0.6),_transparent_46%)]" />
+      <Bot
+        aria-hidden="true"
+        className={`relative ${compact ? 'size-5' : 'size-7'}`}
+        strokeWidth={2.4}
+      />
+      {!compact ? (
+        <span className="absolute -right-1 -top-1 size-4 rounded-full border-2 border-primary bg-emerald-400" />
+      ) : null}
+    </span>
+  )
+}
+
 export function ManagerChat() {
   const { i18n, t } = useTranslation()
   const locale = i18n.resolvedLanguage === 'kk' ? 'kk-KZ' : 'ru-RU'
@@ -101,6 +126,9 @@ export function ManagerChat() {
   }) as SmartReply[]
   const steps = t('chat.steps.items', { returnObjects: true }) as ChatStep[]
   const documents = t('chat.documents.items', {
+    returnObjects: true,
+  }) as string[]
+  const managerProfileItems = t('chat.managerProfile.items', {
     returnObjects: true,
   }) as string[]
   const phoneHref = t('contacts.phoneHref')
@@ -329,13 +357,11 @@ export function ManagerChat() {
           <div className="overflow-hidden rounded-[1.75rem] bg-primary text-white shadow-[0_34px_110px_rgb(7_20_38_/_0.24)] ring-1 ring-primary/10">
             <div className="flex flex-col gap-4 border-b border-white/10 bg-white/8 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
               <div className="flex items-center gap-4">
-                <div className="relative flex size-14 shrink-0 items-center justify-center rounded-2xl bg-accent text-primary shadow-[0_16px_45px_rgb(212_175_55_/_0.22)]">
-                  <UserRound aria-hidden="true" className="size-7" />
-                  <span className="absolute -right-1 -top-1 size-4 rounded-full border-2 border-primary bg-emerald-400" />
-                </div>
+                <ManagerAvatar />
                 <div>
-                  <p className="text-lg font-black leading-6 text-white">
-                    {t('chat.managerName')}
+                  <p className="flex items-center gap-2 text-lg font-black leading-6 text-white">
+                    <span>{t('chat.managerName')}</span>
+                    <BadgeCheck aria-hidden="true" className="size-5 text-accent" />
                   </p>
                   <p className="mt-1 text-sm leading-5 text-white/68">
                     {t('chat.managerRole')}
@@ -392,11 +418,7 @@ export function ManagerChat() {
                         key={message.id}
                         transition={{ duration: 0.24, ease: 'easeOut' }}
                       >
-                        {!isClient ? (
-                          <span className="mt-1 flex size-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-primary">
-                            <UserRound aria-hidden="true" className="size-5" />
-                          </span>
-                        ) : null}
+                        {!isClient ? <ManagerAvatar compact /> : null}
                         <div
                           className={`max-w-[84%] rounded-2xl px-4 py-3 shadow-sm sm:max-w-[72%] ${
                             isClient
@@ -429,9 +451,7 @@ export function ManagerChat() {
                       key="typing"
                       transition={{ duration: 0.2, ease: 'easeOut' }}
                     >
-                      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-primary">
-                        <UserRound aria-hidden="true" className="size-5" />
-                      </span>
+                      <ManagerAvatar compact />
                       <div className="rounded-2xl rounded-bl-md border border-white/10 bg-white/10 px-4 py-3">
                         <span className="sr-only">{t('chat.typing')}</span>
                         <span className="flex h-6 items-center gap-1.5">
@@ -573,6 +593,38 @@ export function ManagerChat() {
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="relative overflow-hidden rounded-[1.5rem] bg-primary p-6 text-white shadow-[0_24px_80px_rgb(7_20_38_/_0.18)]">
+            <div className="absolute inset-0 bg-[linear-gradient(145deg,_rgb(212_175_55_/_0.22),_transparent_46%),linear-gradient(180deg,_rgb(255_255_255_/_0.06),_transparent)]" />
+            <div className="relative flex items-start gap-4">
+              <ManagerAvatar />
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent">
+                  {t('chat.managerProfile.eyebrow')}
+                </p>
+                <h2 className="mt-2 text-2xl font-black leading-tight text-white">
+                  {t('chat.managerProfile.title')}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/68">
+                  {t('chat.managerProfile.description')}
+                </p>
+              </div>
+            </div>
+            <ul className="relative mt-5 grid gap-3">
+              {managerProfileItems.map((item) => (
+                <li
+                  className="flex gap-3 rounded-2xl border border-white/10 bg-white/8 p-3 text-sm font-semibold leading-6 text-white/78"
+                  key={item}
+                >
+                  <CheckCircle2
+                    aria-hidden="true"
+                    className="mt-0.5 size-5 shrink-0 text-accent"
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="rounded-[1.5rem] border border-white/70 bg-surface/92 p-6 shadow-soft ring-1 ring-primary/5 backdrop-blur">
