@@ -66,6 +66,11 @@ export function Header() {
       to: { pathname: '/', hash: '#services' },
     },
     {
+      label: t('nav.tools'),
+      targetId: 'tools',
+      to: { pathname: '/', hash: '#tools' },
+    },
+    {
       label: t('nav.whyUs'),
       targetId: 'why-us',
       to: { pathname: '/', hash: '#why-us' },

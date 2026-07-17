@@ -11,6 +11,7 @@ import { Layout } from './components/layout/Layout'
 import { ManagerChat } from './components/pages/ManagerChat'
 import { About } from './components/sections/About'
 import { Contacts } from './components/sections/Contacts'
+import { FinanceTools } from './components/sections/FinanceTools'
 import { FinalSlogan } from './components/sections/FinalSlogan'
 import { Hero } from './components/sections/Hero'
 import { PromoPanel } from './components/sections/PromoPanel'
@@ -100,6 +101,7 @@ function LandingPage() {
     <Layout>
       <Hero />
       <PromoPanel />
+      <FinanceTools />
       <About />
       <Services />
       <WarningBlock />
