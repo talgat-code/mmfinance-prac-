@@ -7,15 +7,22 @@ import {
   ArrowRight,
   BadgeCheck,
   Bot,
+  BriefcaseBusiness,
+  Building2,
   CheckCircle2,
+  CircleDollarSign,
+  ClipboardList,
   Clock3,
   FileCheck2,
+  Landmark,
   MessageCircle,
+  MessagesSquare,
   PhoneCall,
   RotateCcw,
   Send,
   ShieldCheck,
   Sparkles,
+  TriangleAlert,
   WalletCards,
 } from 'lucide-react'
 
@@ -29,6 +36,7 @@ type ChatMessage = {
 }
 
 type QuickReply = {
+  helper?: string
   label: string
   message: string
   response: string
@@ -44,6 +52,11 @@ type ChatStep = {
   text: string
 }
 
+type ChatMetric = {
+  label: string
+  value: string
+}
+
 type LeadFormValues = {
   name: string
   phone: string
@@ -55,6 +68,15 @@ const actionCards = [
   { icon: WalletCards, key: 'programs' },
   { icon: FileCheck2, key: 'documents' },
   { icon: ShieldCheck, key: 'decision' },
+] as const
+
+const quickReplyIcons = [
+  CircleDollarSign,
+  Building2,
+  ClipboardList,
+  TriangleAlert,
+  Landmark,
+  BriefcaseBusiness,
 ] as const
 
 const phonePattern = /^[\d+()\s-]+$/
@@ -71,6 +93,9 @@ const initialLeadFormTouched: LeadFormTouched = {
 
 const createMessageId = (role: MessageRole) =>
   `${role}-${Date.now()}-${Math.random().toString(36).slice(2)}`
+
+const normalizeChatText = (value: string) =>
+  value.toLowerCase().replaceAll('ё', 'е')
 
 type ManagerAvatarProps = {
   compact?: boolean
@@ -124,6 +149,9 @@ export function ManagerChat() {
   const smartReplies = t('chat.smartReplies', {
     returnObjects: true,
   }) as SmartReply[]
+  const chatMetrics = t('chat.metrics', {
+    returnObjects: true,
+  }) as ChatMetric[]
   const steps = t('chat.steps.items', { returnObjects: true }) as ChatStep[]
   const documents = t('chat.documents.items', {
     returnObjects: true,
@@ -218,12 +246,21 @@ export function ManagerChat() {
   )}`
 
   const findManagerReply = (message: string) => {
-    const normalizedMessage = message.toLowerCase()
-    const matchedReply = smartReplies.find(({ keywords }) =>
-      keywords.some((keyword) => normalizedMessage.includes(keyword.toLowerCase())),
-    )
+    const normalizedMessage = normalizeChatText(message)
+    const matchedReplies = smartReplies
+      .map((reply, index) => ({
+        index,
+        reply,
+        score: reply.keywords.reduce((score, keyword) => {
+          const normalizedKeyword = normalizeChatText(keyword)
 
-    return matchedReply?.response ?? t('chat.fallbackReply')
+          return normalizedMessage.includes(normalizedKeyword) ? score + 1 : score
+        }, 0),
+      }))
+      .filter(({ score }) => score > 0)
+      .sort((first, second) => second.score - first.score || first.index - second.index)
+
+    return matchedReplies[0]?.reply.response ?? t('chat.fallbackReply')
   }
 
   const focusMessageInput = () => {
@@ -259,6 +296,8 @@ export function ManagerChat() {
 
     const managerResponse = preparedResponse ?? findManagerReply(trimmedMessage)
 
+    const responseDelay = Math.min(1400, 720 + managerResponse.length * 3)
+
     typingTimerRef.current = window.setTimeout(() => {
       setMessages((currentMessages) => [
         ...currentMessages,
@@ -271,7 +310,7 @@ export function ManagerChat() {
       ])
       setIsTyping(false)
       focusMessageInput()
-    }, 850)
+    }, responseDelay)
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -355,55 +394,78 @@ export function ManagerChat() {
           </div>
 
           <div className="overflow-hidden rounded-[1.75rem] bg-primary text-white shadow-[0_34px_110px_rgb(7_20_38_/_0.24)] ring-1 ring-primary/10">
-            <div className="flex flex-col gap-4 border-b border-white/10 bg-white/8 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-              <div className="flex items-center gap-4">
-                <ManagerAvatar />
-                <div>
-                  <p className="flex items-center gap-2 text-lg font-black leading-6 text-white">
-                    <span>{t('chat.managerName')}</span>
-                    <BadgeCheck aria-hidden="true" className="size-5 text-accent" />
-                  </p>
-                  <p className="mt-1 text-sm leading-5 text-white/68">
-                    {t('chat.managerRole')}
-                  </p>
+            <div className="relative overflow-hidden border-b border-white/10 bg-white/8 p-5 sm:p-6">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,_rgb(34_197_94_/_0.2),_transparent_34%),linear-gradient(135deg,_rgb(255_255_255_/_0.08),_transparent_48%)]" />
+              <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-4">
+                  <ManagerAvatar />
+                  <div>
+                    <p className="flex items-center gap-2 text-lg font-black leading-6 text-white">
+                      <span>{t('chat.managerName')}</span>
+                      <BadgeCheck aria-hidden="true" className="size-5 text-accent" />
+                    </p>
+                    <p className="mt-1 text-sm leading-5 text-white/68">
+                      {t('chat.managerRole')}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex flex-col gap-2 sm:items-end">
-                <div className="flex flex-wrap gap-2">
-                  <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-emerald-300/25 bg-emerald-400/12 px-3 text-xs font-bold text-emerald-100">
-                    <span className="size-2 rounded-full bg-emerald-300" />
-                    {t('chat.onlineStatus')}
-                  </span>
-                  <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 text-xs font-bold text-white/72">
-                    <Clock3 aria-hidden="true" className="size-4 text-accent" />
-                    {t('chat.responseTime')}
-                  </span>
-                </div>
-                <div className="grid w-full gap-2 sm:w-auto sm:grid-cols-2">
-                  <a
-                    aria-label={t('contacts.whatsappAriaLabel')}
-                    className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent px-3 text-xs font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
-                    href={whatsappUrl}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <MessageCircle aria-hidden="true" className="size-4" />
-                    {t('chat.actions.whatsapp')}
-                  </a>
-                  <a
-                    aria-label={t('contacts.callLabel')}
-                    className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-white/12 bg-white/10 px-3 text-xs font-black text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
-                    href={`tel:${phoneHref}`}
-                  >
-                    <PhoneCall aria-hidden="true" className="size-4" />
-                    {t('chat.actions.call')}
-                  </a>
+                <div className="flex flex-col gap-2 sm:items-end">
+                  <div className="flex flex-wrap gap-2">
+                    <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-emerald-300/25 bg-emerald-400/12 px-3 text-xs font-bold text-emerald-100">
+                      <motion.span
+                        animate={{
+                          opacity: [0.45, 1, 0.45],
+                          scale: [0.9, 1.14, 0.9],
+                        }}
+                        className="size-2 rounded-full bg-emerald-300"
+                        transition={{ duration: 1.35, repeat: Infinity }}
+                      />
+                      {t('chat.onlineStatus')}
+                    </span>
+                    <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 text-xs font-bold text-white/72">
+                      <Clock3 aria-hidden="true" className="size-4 text-accent" />
+                      {t('chat.responseTime')}
+                    </span>
+                  </div>
+                  <div className="grid w-full gap-2 sm:w-auto sm:grid-cols-2">
+                    <a
+                      aria-label={t('contacts.whatsappAriaLabel')}
+                      className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent px-3 text-xs font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
+                      href={whatsappUrl}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <MessageCircle aria-hidden="true" className="size-4" />
+                      {t('chat.actions.whatsapp')}
+                    </a>
+                    <a
+                      aria-label={t('contacts.callLabel')}
+                      className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-white/12 bg-white/10 px-3 text-xs font-black text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+                      href={`tel:${phoneHref}`}
+                    >
+                      <PhoneCall aria-hidden="true" className="size-4" />
+                      {t('chat.actions.call')}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="h-[34rem] overflow-y-auto px-4 py-5 sm:px-6">
+            <div className="grid gap-px border-b border-white/10 bg-white/10 sm:grid-cols-3">
+              {chatMetrics.map((metric) => (
+                <div className="bg-primary/82 px-5 py-4" key={metric.label}>
+                  <p className="text-[0.68rem] font-black uppercase tracking-[0.14em] text-white/42">
+                    {metric.label}
+                  </p>
+                  <p className="mt-1 text-sm font-black leading-5 text-white">
+                    {metric.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="h-[32rem] overflow-y-auto px-4 py-5 sm:px-6">
               <ul className="grid gap-4">
                 <AnimatePresence initial={false}>
                   {messages.map((message) => {
@@ -477,18 +539,40 @@ export function ManagerChat() {
             </div>
 
             <div className="border-t border-white/10 bg-white/8 p-4 sm:p-6">
-              <div className="mb-4 flex flex-wrap gap-2">
-                {quickReplies.map((reply) => (
-                  <button
-                    className="min-h-10 rounded-xl border border-white/12 bg-white/10 px-3 text-sm font-bold text-white/78 transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0"
-                    disabled={isTyping}
-                    key={reply.label}
-                    onClick={() => sendMessage(reply.message, reply.response)}
-                    type="button"
-                  >
-                    {reply.label}
-                  </button>
-                ))}
+              <div className="mb-4">
+                <p className="mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-white/46">
+                  <MessagesSquare aria-hidden="true" className="size-4 text-accent" />
+                  {t('chat.quickTitle')}
+                </p>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {quickReplies.map((reply, index) => {
+                    const Icon = quickReplyIcons[index % quickReplyIcons.length]
+
+                    return (
+                      <button
+                        className="group flex min-h-20 items-center gap-3 rounded-2xl border border-white/12 bg-white/10 px-3.5 py-3 text-left transition hover:-translate-y-0.5 hover:border-accent/55 hover:bg-white/14 disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0"
+                        disabled={isTyping}
+                        key={reply.label}
+                        onClick={() => sendMessage(reply.message, reply.response)}
+                        type="button"
+                      >
+                        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-primary shadow-[0_12px_30px_rgb(34_197_94_/_0.18)] transition group-hover:bg-accent">
+                          <Icon aria-hidden="true" className="size-5" />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-sm font-black leading-5 text-white">
+                            {reply.label}
+                          </span>
+                          {reply.helper ? (
+                            <span className="mt-1 block text-xs font-semibold leading-5 text-white/52">
+                              {reply.helper}
+                            </span>
+                          ) : null}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
 
               <div className="mb-4 grid gap-2 sm:grid-cols-2">
