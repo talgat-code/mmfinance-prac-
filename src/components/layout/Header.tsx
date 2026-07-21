@@ -75,6 +75,7 @@ export function Header() {
       targetId: 'why-us',
       to: { pathname: '/', hash: '#why-us' },
     },
+    { label: t('nav.faq'), targetId: 'faq', to: { pathname: '/', hash: '#faq' } },
     { label: t('nav.contacts'), targetId: 'contacts', to: { pathname: '/', hash: '#contacts' } },
     { label: t('nav.chat'), to: '/chat' },
   ]
@@ -151,7 +152,7 @@ export function Header() {
 
         <nav
           aria-label={t('nav.mainNavigation')}
-          className="hidden items-center justify-center gap-7 md:flex"
+          className="hidden items-center justify-center gap-5 md:flex xl:gap-7"
         >
           {navItems.map((item) => renderNavLink(item))}
         </nav>
