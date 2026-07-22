@@ -7,7 +7,7 @@ import { Card } from '../ui/Card'
 import { SectionHeading } from '../ui/SectionHeading'
 import { SectionReveal } from '../ui/SectionReveal'
 
-const phonePattern = /^[\d+()\s]+$/
+const phonePattern = /^[\d+()\s-]+$/
 
 type ContactItem = {
   icon: LucideIcon
@@ -21,9 +21,15 @@ type ContactItem = {
 type ContactFormValues = {
   name: string
   phone: string
+  topic: string
 }
 
-type ContactFormTouched = Record<keyof ContactFormValues, boolean>
+type ContactFormTouched = Record<'name' | 'phone', boolean>
+
+type TopicOption = {
+  label: string
+  value: string
+}
 
 const formatWhatsappTemplate = (
   template: string,
@@ -32,10 +38,12 @@ const formatWhatsappTemplate = (
   template
     .replaceAll('{name}', values.name.trim())
     .replaceAll('{phone}', values.phone.trim())
+    .replaceAll('{topic}', values.topic.trim())
 
 const initialFormValues: ContactFormValues = {
   name: '',
   phone: '',
+  topic: 'credit',
 }
 
 const initialTouched: ContactFormTouched = {
@@ -50,6 +58,11 @@ export function Contacts() {
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
   const [touched, setTouched] = useState<ContactFormTouched>(initialTouched)
   const [isSuccessVisible, setIsSuccessVisible] = useState(false)
+  const topicOptions = t('contacts.form.topicOptions', {
+    returnObjects: true,
+  }) as TopicOption[]
+  const selectedTopic =
+    topicOptions.find((option) => option.value === formValues.topic) ?? topicOptions[0]
   const trimmedName = formValues.name.trim()
   const trimmedPhone = formValues.phone.trim()
   const isPhoneValid = trimmedPhone.length > 0 && phonePattern.test(trimmedPhone)
@@ -96,7 +109,7 @@ export function Contacts() {
     },
   ]
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const field = event.target.name as keyof ContactFormValues
 
     setFormValues((currentValues) => ({
@@ -127,6 +140,7 @@ export function Contacts() {
     const message = formatWhatsappTemplate(t('contacts.form.whatsappTemplate'), {
       name: trimmedName,
       phone: trimmedPhone,
+      topic: selectedTopic?.label ?? formValues.topic,
     })
     const url = `https://wa.me/${whatsappHref}?text=${encodeURIComponent(message)}`
 
@@ -226,6 +240,28 @@ export function Contacts() {
               </div>
 
               <form className="space-y-5" noValidate onSubmit={handleSubmit}>
+                <div>
+                  <label
+                    className="text-sm font-semibold text-primary"
+                    htmlFor="contact-topic"
+                  >
+                    {t('contacts.form.topicLabel')}
+                  </label>
+                  <select
+                    className="mt-2 min-h-12 w-full rounded-xl border border-border bg-white px-4 text-primary outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/15"
+                    id="contact-topic"
+                    name="topic"
+                    onChange={handleChange}
+                    value={formValues.topic}
+                  >
+                    {topicOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div>
                   <label
                     className="text-sm font-semibold text-primary"

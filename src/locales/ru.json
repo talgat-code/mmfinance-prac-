@@ -327,18 +327,41 @@
     "form": {
       "title": "Заявка на консультацию",
       "description": "Оставьте имя и номер телефона — мы подготовим сообщение для WhatsApp, чтобы менеджер быстрее понял вашу задачу.",
+      "topicLabel": "Тема обращения",
+      "topicOptions": [
+        {
+          "value": "credit",
+          "label": "Кредит"
+        },
+        {
+          "value": "mortgage",
+          "label": "Ипотека"
+        },
+        {
+          "value": "pledge",
+          "label": "Залоговый кредит"
+        },
+        {
+          "value": "business",
+          "label": "ИП/ТОО"
+        },
+        {
+          "value": "consultation",
+          "label": "Консультация"
+        }
+      ],
       "nameLabel": "Имя",
       "namePlaceholder": "Ваше имя",
       "nameRequired": "Введите имя",
       "phoneLabel": "Телефон",
       "phonePlaceholder": "8 777 086 62 54",
       "phoneRequired": "Введите телефон",
-      "phoneInvalid": "Телефон может содержать только цифры, +, пробелы и скобки",
+      "phoneInvalid": "Телефон может содержать только цифры, +, пробелы, скобки и дефис",
       "submit": "Отправить",
       "submitAriaLabel": "Отправить заявку в WhatsApp",
       "success": "Открываем WhatsApp...",
       "note": "После отправки откроется WhatsApp с подготовленным сообщением.",
-      "whatsappTemplate": "Здравствуйте! Меня зовут {name}, телефон {phone}. Хочу получить консультацию по кредиту."
+      "whatsappTemplate": "Здравствуйте! Меня зовут {name}, телефон {phone}.\nТема обращения: {topic}.\nХочу получить консультацию MM Finance."
     },
     "map": {
       "title": "Офис MM Finance Consulting",

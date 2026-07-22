@@ -327,18 +327,41 @@
     "form": {
       "title": "Кеңес алуға өтінім",
       "description": "Атыңыз бен телефон нөміріңізді қалдырыңыз — менеджер міндетіңізді тез түсінуі үшін WhatsApp хабарламасын дайындаймыз.",
+      "topicLabel": "Өтінім тақырыбы",
+      "topicOptions": [
+        {
+          "value": "credit",
+          "label": "Несие"
+        },
+        {
+          "value": "mortgage",
+          "label": "Ипотека"
+        },
+        {
+          "value": "pledge",
+          "label": "Кепіл несиесі"
+        },
+        {
+          "value": "business",
+          "label": "ИП/ТОО"
+        },
+        {
+          "value": "consultation",
+          "label": "Кеңес алу"
+        }
+      ],
       "nameLabel": "Атыңыз",
       "namePlaceholder": "Атыңыз",
       "nameRequired": "Атыңызды енгізіңіз",
       "phoneLabel": "Телефон",
       "phonePlaceholder": "8 777 086 62 54",
       "phoneRequired": "Телефонды енгізіңіз",
-      "phoneInvalid": "Телефон тек цифрлардан, +, бос орындардан және жақшалардан тұруы керек",
+      "phoneInvalid": "Телефон тек цифрлардан, +, бос орындардан, жақшалардан және дефистен тұруы керек",
       "submit": "Жіберу",
       "submitAriaLabel": "Өтінімді WhatsApp-қа жіберу",
       "success": "WhatsApp ашылып жатыр...",
       "note": "Жібергеннен кейін дайын хабарламамен WhatsApp ашылады.",
-      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}. Несие бойынша кеңес алғым келеді."
+      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}.\nӨтінім тақырыбы: {topic}.\nMM Finance кеңесін алғым келеді."
     },
     "map": {
       "title": "MM Finance Consulting офисі",
