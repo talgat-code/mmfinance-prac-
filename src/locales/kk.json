@@ -575,6 +575,13 @@
       "restart": "Қайта бастау"
     }
   },
+  "quickDock": {
+    "label": "Жылдам байланыс",
+    "title": "Жылдам байланыс",
+    "whatsapp": "WhatsApp",
+    "chat": "Чат",
+    "call": "Қоңырау"
+  },
   "footer": {
     "tagline": "MM Finance Consulting — қаржылық мәселелерді шешудегі сенімді серіктес.",
     "copyright": "Барлық құқықтар қорғалған.",

@@ -575,6 +575,13 @@
       "restart": "Начать заново"
     }
   },
+  "quickDock": {
+    "label": "Быстрая связь",
+    "title": "Быстрая связь",
+    "whatsapp": "WhatsApp",
+    "chat": "Чат",
+    "call": "Звонок"
+  },
   "footer": {
     "tagline": "MM Finance Consulting — надежный партнер в решении финансовых вопросов.",
     "copyright": "Все права защищены.",
