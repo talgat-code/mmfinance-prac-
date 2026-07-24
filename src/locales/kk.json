@@ -350,6 +350,10 @@
           "label": "Кеңес алу"
         }
       ],
+      "amountLabel": "Қажет сома",
+      "amountPlaceholder": "Мысалы: 5 000 000 теңге",
+      "amountHint": "Сома әлі белгісіз болса, бос қалдыруға болады.",
+      "amountFallback": "көрсетілмеген",
       "nameLabel": "Атыңыз",
       "namePlaceholder": "Атыңыз",
       "nameRequired": "Атыңызды енгізіңіз",
@@ -361,7 +365,7 @@
       "submitAriaLabel": "Өтінімді WhatsApp-қа жіберу",
       "success": "WhatsApp ашылып жатыр...",
       "note": "Жібергеннен кейін дайын хабарламамен WhatsApp ашылады.",
-      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}.\nӨтінім тақырыбы: {topic}.\nMM Finance кеңесін алғым келеді."
+      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}.\nӨтінім тақырыбы: {topic}.\nҚажет сома: {amount}.\nMM Finance кеңесін алғым келеді."
     },
     "map": {
       "title": "MM Finance Consulting офисі",

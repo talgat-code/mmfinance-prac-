@@ -350,6 +350,10 @@
           "label": "Консультация"
         }
       ],
+      "amountLabel": "Желаемая сумма",
+      "amountPlaceholder": "Например: 5 000 000 тенге",
+      "amountHint": "Можно оставить пустым, если сумма пока неизвестна.",
+      "amountFallback": "не указана",
       "nameLabel": "Имя",
       "namePlaceholder": "Ваше имя",
       "nameRequired": "Введите имя",
@@ -361,7 +365,7 @@
       "submitAriaLabel": "Отправить заявку в WhatsApp",
       "success": "Открываем WhatsApp...",
       "note": "После отправки откроется WhatsApp с подготовленным сообщением.",
-      "whatsappTemplate": "Здравствуйте! Меня зовут {name}, телефон {phone}.\nТема обращения: {topic}.\nХочу получить консультацию MM Finance."
+      "whatsappTemplate": "Здравствуйте! Меня зовут {name}, телефон {phone}.\nТема обращения: {topic}.\nЖелаемая сумма: {amount}.\nХочу получить консультацию MM Finance."
     },
     "map": {
       "title": "Офис MM Finance Consulting",

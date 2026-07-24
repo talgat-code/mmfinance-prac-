@@ -19,6 +19,7 @@ type ContactItem = {
 }
 
 type ContactFormValues = {
+  amount: string
   name: string
   phone: string
   topic: string
@@ -36,11 +37,13 @@ const formatWhatsappTemplate = (
   values: ContactFormValues,
 ) =>
   template
+    .replaceAll('{amount}', values.amount.trim())
     .replaceAll('{name}', values.name.trim())
     .replaceAll('{phone}', values.phone.trim())
     .replaceAll('{topic}', values.topic.trim())
 
 const initialFormValues: ContactFormValues = {
+  amount: '',
   name: '',
   phone: '',
   topic: 'credit',
@@ -63,6 +66,8 @@ export function Contacts() {
   }) as TopicOption[]
   const selectedTopic =
     topicOptions.find((option) => option.value === formValues.topic) ?? topicOptions[0]
+  const amountValue =
+    formValues.amount.trim() || t('contacts.form.amountFallback')
   const trimmedName = formValues.name.trim()
   const trimmedPhone = formValues.phone.trim()
   const isPhoneValid = trimmedPhone.length > 0 && phonePattern.test(trimmedPhone)
@@ -138,6 +143,7 @@ export function Contacts() {
     }
 
     const message = formatWhatsappTemplate(t('contacts.form.whatsappTemplate'), {
+      amount: amountValue,
       name: trimmedName,
       phone: trimmedPhone,
       topic: selectedTopic?.label ?? formValues.topic,
@@ -260,6 +266,29 @@ export function Contacts() {
                       </option>
                     ))}
                   </select>
+                </div>
+
+                <div>
+                  <label
+                    className="text-sm font-semibold text-primary"
+                    htmlFor="contact-amount"
+                  >
+                    {t('contacts.form.amountLabel')}
+                  </label>
+                  <input
+                    autoComplete="off"
+                    className="mt-2 min-h-12 w-full rounded-xl border border-border bg-white px-4 text-primary outline-none transition placeholder:text-muted/60 focus:border-accent focus:ring-4 focus:ring-accent/15"
+                    id="contact-amount"
+                    inputMode="numeric"
+                    name="amount"
+                    onChange={handleChange}
+                    placeholder={t('contacts.form.amountPlaceholder')}
+                    type="text"
+                    value={formValues.amount}
+                  />
+                  <p className="mt-2 text-xs font-semibold leading-5 text-muted">
+                    {t('contacts.form.amountHint')}
+                  </p>
                 </div>
 
                 <div>
