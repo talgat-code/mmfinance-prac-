@@ -20,6 +20,7 @@ type ContactItem = {
 
 type ContactFormValues = {
   amount: string
+  channel: string
   name: string
   phone: string
   topic: string
@@ -27,7 +28,7 @@ type ContactFormValues = {
 
 type ContactFormTouched = Record<'name' | 'phone', boolean>
 
-type TopicOption = {
+type ContactSelectOption = {
   label: string
   value: string
 }
@@ -38,12 +39,14 @@ const formatWhatsappTemplate = (
 ) =>
   template
     .replaceAll('{amount}', values.amount.trim())
+    .replaceAll('{channel}', values.channel.trim())
     .replaceAll('{name}', values.name.trim())
     .replaceAll('{phone}', values.phone.trim())
     .replaceAll('{topic}', values.topic.trim())
 
 const initialFormValues: ContactFormValues = {
   amount: '',
+  channel: 'whatsapp',
   name: '',
   phone: '',
   topic: 'credit',
@@ -63,9 +66,15 @@ export function Contacts() {
   const [isSuccessVisible, setIsSuccessVisible] = useState(false)
   const topicOptions = t('contacts.form.topicOptions', {
     returnObjects: true,
-  }) as TopicOption[]
+  }) as ContactSelectOption[]
+  const channelOptions = t('contacts.form.channelOptions', {
+    returnObjects: true,
+  }) as ContactSelectOption[]
   const selectedTopic =
     topicOptions.find((option) => option.value === formValues.topic) ?? topicOptions[0]
+  const selectedChannel =
+    channelOptions.find((option) => option.value === formValues.channel) ??
+    channelOptions[0]
   const amountValue =
     formValues.amount.trim() || t('contacts.form.amountFallback')
   const trimmedName = formValues.name.trim()
@@ -144,6 +153,7 @@ export function Contacts() {
 
     const message = formatWhatsappTemplate(t('contacts.form.whatsappTemplate'), {
       amount: amountValue,
+      channel: selectedChannel?.label ?? formValues.channel,
       name: trimmedName,
       phone: trimmedPhone,
       topic: selectedTopic?.label ?? formValues.topic,
@@ -289,6 +299,28 @@ export function Contacts() {
                   <p className="mt-2 text-xs font-semibold leading-5 text-muted">
                     {t('contacts.form.amountHint')}
                   </p>
+                </div>
+
+                <div>
+                  <label
+                    className="text-sm font-semibold text-primary"
+                    htmlFor="contact-channel"
+                  >
+                    {t('contacts.form.channelLabel')}
+                  </label>
+                  <select
+                    className="mt-2 min-h-12 w-full rounded-xl border border-border bg-white px-4 text-primary outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/15"
+                    id="contact-channel"
+                    name="channel"
+                    onChange={handleChange}
+                    value={formValues.channel}
+                  >
+                    {channelOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>

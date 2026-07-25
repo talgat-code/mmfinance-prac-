@@ -354,6 +354,21 @@
       "amountPlaceholder": "Мысалы: 5 000 000 теңге",
       "amountHint": "Сома әлі белгісіз болса, бос қалдыруға болады.",
       "amountFallback": "көрсетілмеген",
+      "channelLabel": "Қалай байланысқан ыңғайлы",
+      "channelOptions": [
+        {
+          "value": "whatsapp",
+          "label": "WhatsApp-қа жазу"
+        },
+        {
+          "value": "call",
+          "label": "Қоңырау шалу"
+        },
+        {
+          "value": "office",
+          "label": "Офиске келу"
+        }
+      ],
       "nameLabel": "Атыңыз",
       "namePlaceholder": "Атыңыз",
       "nameRequired": "Атыңызды енгізіңіз",
@@ -365,7 +380,7 @@
       "submitAriaLabel": "Өтінімді WhatsApp-қа жіберу",
       "success": "WhatsApp ашылып жатыр...",
       "note": "Жібергеннен кейін дайын хабарламамен WhatsApp ашылады.",
-      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}.\nӨтінім тақырыбы: {topic}.\nҚажет сома: {amount}.\nMM Finance кеңесін алғым келеді."
+      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}.\nӨтінім тақырыбы: {topic}.\nҚажет сома: {amount}.\nБайланысуға ыңғайлы жол: {channel}.\nMM Finance кеңесін алғым келеді."
     },
     "map": {
       "title": "MM Finance Consulting офисі",
