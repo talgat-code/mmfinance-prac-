@@ -1,7 +1,7 @@
 import type { ChangeEvent, FocusEvent, FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
-import { CheckCircle2, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
+import { CheckCircle2, Copy, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { SectionHeading } from '../ui/SectionHeading'
@@ -61,8 +61,10 @@ export function Contacts() {
   const { t } = useTranslation()
   const phoneHref = t('contacts.phoneHref')
   const whatsappHref = t('contacts.whatsappHref')
+  const address = t('contacts.address')
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
   const [touched, setTouched] = useState<ContactFormTouched>(initialTouched)
+  const [isAddressCopiedVisible, setIsAddressCopiedVisible] = useState(false)
   const [isSuccessVisible, setIsSuccessVisible] = useState(false)
   const topicOptions = t('contacts.form.topicOptions', {
     returnObjects: true,
@@ -100,6 +102,16 @@ export function Contacts() {
     return () => window.clearTimeout(timer)
   }, [isSuccessVisible])
 
+  useEffect(() => {
+    if (!isAddressCopiedVisible) {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => setIsAddressCopiedVisible(false), 2500)
+
+    return () => window.clearTimeout(timer)
+  }, [isAddressCopiedVisible])
+
   const contacts: ContactItem[] = [
     {
       icon: Phone,
@@ -119,7 +131,7 @@ export function Contacts() {
     {
       icon: MapPin,
       title: t('contacts.cards.address'),
-      label: t('contacts.address'),
+      label: address,
     },
   ]
 
@@ -140,6 +152,16 @@ export function Contacts() {
       ...currentTouched,
       [field]: true,
     }))
+  }
+
+  const handleCopyAddress = async () => {
+    try {
+      await navigator.clipboard?.writeText(address)
+    } catch {
+      // Clipboard access can be blocked outside secure browser contexts.
+    }
+
+    setIsAddressCopiedVisible(true)
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -237,8 +259,25 @@ export function Contacts() {
                     {t('contacts.map.description')}
                   </p>
                   <p className="mt-5 text-base font-bold leading-7 text-white">
-                    {t('contacts.address')}
+                    {address}
                   </p>
+                  <button
+                    aria-label={t('contacts.map.copyAriaLabel')}
+                    className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-accent/45 bg-accent/12 px-4 text-sm font-bold text-accent transition duration-200 hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-auto"
+                    onClick={handleCopyAddress}
+                    type="button"
+                  >
+                    {isAddressCopiedVisible ? (
+                      <CheckCircle2 aria-hidden="true" className="size-4" />
+                    ) : (
+                      <Copy aria-hidden="true" className="size-4" />
+                    )}
+                    <span>
+                      {isAddressCopiedVisible
+                        ? t('contacts.map.copySuccess')
+                        : t('contacts.map.copyAddress')}
+                    </span>
+                  </button>
                 </div>
               </div>
             </Card>
