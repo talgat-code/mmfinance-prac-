@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import type { ChangeEvent, FocusEvent, FormEvent } from 'react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   ArrowRight,
   BadgeCheck,
@@ -55,6 +55,11 @@ type ChatStep = {
 type ChatMetric = {
   label: string
   value: string
+}
+
+type ServiceOption = {
+  key: string
+  title: string
 }
 
 type LeadFormValues = {
@@ -123,6 +128,7 @@ function ManagerAvatar({ compact = false }: ManagerAvatarProps) {
 
 export function ManagerChat() {
   const { i18n, t } = useTranslation()
+  const [searchParams] = useSearchParams()
   const locale = i18n.resolvedLanguage === 'kk' ? 'kk-KZ' : 'ru-RU'
   const timeFormatter = useMemo(
     () =>
@@ -152,6 +158,12 @@ export function ManagerChat() {
   const chatMetrics = t('chat.metrics', {
     returnObjects: true,
   }) as ChatMetric[]
+  const serviceOptions = t('services.items', {
+    returnObjects: true,
+  }) as ServiceOption[]
+  const selectedServiceKey = searchParams.get('service') ?? ''
+  const selectedServiceTitle =
+    serviceOptions.find((service) => service.key === selectedServiceKey)?.title ?? ''
   const steps = t('chat.steps.items', { returnObjects: true }) as ChatStep[]
   const documents = t('chat.documents.items', {
     returnObjects: true,
@@ -184,14 +196,21 @@ export function ManagerChat() {
     const initialMessages = t('chat.initialMessages', {
       returnObjects: true,
     }) as string[]
+    const visibleMessages = selectedServiceTitle
+      ? [
+          initialMessages[0],
+          t('chat.selectedServiceMessage', { service: selectedServiceTitle }),
+          ...initialMessages.slice(1),
+        ]
+      : initialMessages
 
-    return initialMessages.map((text, index) => ({
-      id: `manager-initial-${locale}-${index}`,
+    return visibleMessages.map((text, index) => ({
+      id: `manager-initial-${locale}-${selectedServiceKey || 'default'}-${index}`,
       role: 'manager' as const,
       text,
       time: timeFormatter.format(new Date()),
     }))
-  }, [locale, t, timeFormatter])
+  }, [locale, selectedServiceKey, selectedServiceTitle, t, timeFormatter])
 
   useEffect(() => {
     setMessages(createInitialMessages())
@@ -391,6 +410,13 @@ export function ManagerChat() {
             <p className="mt-4 max-w-2xl text-base leading-8 text-muted sm:text-lg">
               {t('chat.description')}
             </p>
+            {selectedServiceTitle ? (
+              <div className="mt-5 inline-flex max-w-full items-center gap-2 rounded-2xl border border-accent/30 bg-white px-4 py-3 text-sm font-bold text-primary shadow-sm ring-1 ring-primary/5">
+                <Sparkles aria-hidden="true" className="size-4 shrink-0 text-accent" />
+                <span className="text-muted">{t('chat.selectedServiceBadge')}</span>
+                <span className="min-w-0 truncate">{selectedServiceTitle}</span>
+              </div>
+            ) : null}
           </div>
 
           <div className="overflow-hidden rounded-[1.75rem] bg-primary text-white shadow-[0_34px_110px_rgb(7_20_38_/_0.24)] ring-1 ring-primary/10">

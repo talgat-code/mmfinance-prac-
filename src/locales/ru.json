@@ -210,34 +210,42 @@
     "eyebrow": "Услуги",
     "title": "Оформляем кредиты быстро и понятно",
     "description": "Подберем подходящий вариант под вашу ситуацию и объясним каждый шаг оформления.",
+    "cardCta": "Обсудить с менеджером",
+    "cardCtaAria": "Обсудить услугу {{service}} с менеджером",
     "items": [
       {
         "icon": "User",
+        "key": "no-pension",
         "title": "Без пенсионных отчислений",
         "description": "от 1 000 000 до 8 000 000 тенге"
       },
       {
         "icon": "Users",
+        "key": "with-pension",
         "title": "С пенсионными отчислениями",
         "description": "от 1 000 000 до 15 000 000 тенге"
       },
       {
         "icon": "Globe",
+        "key": "residence",
         "title": "По ЕНПФ / виду на жительство",
         "description": "до 8 000 000 тенге"
       },
       {
         "icon": "Briefcase",
+        "key": "business",
         "title": "Для ИП/ТОО",
         "description": "от 1 000 000 до 50 000 000 тенге"
       },
       {
         "icon": "Home",
+        "key": "mortgage",
         "title": "Ипотека",
         "description": "помогаем купить жилье с любым первоначальным взносом"
       },
       {
         "icon": "Car",
+        "key": "secured",
         "title": "Залоговый кредит",
         "description": "кредит под залог недвижимости"
       }
@@ -399,6 +407,8 @@
     "onlineStatus": "На связи",
     "responseTime": "Ответ до 2 минут",
     "quickTitle": "Быстрые темы",
+    "selectedServiceBadge": "Выбранная услуга",
+    "selectedServiceMessage": "Вижу, вас интересует направление: {{service}}. Напишите желаемую сумму, город и есть ли официальный доход - я подскажу, с чего начать.",
     "managerLabel": "Сообщение менеджера",
     "clientLabel": "Ваше сообщение",
     "typing": "Менеджер печатает",

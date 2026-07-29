@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
 import {
+  ArrowRight,
   Briefcase,
   Car,
   Globe,
@@ -8,6 +9,7 @@ import {
   Users,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { Card } from '../ui/Card'
 import { SectionHeading } from '../ui/SectionHeading'
 import { SectionReveal } from '../ui/SectionReveal'
@@ -25,6 +27,7 @@ type ServiceIconName = keyof typeof serviceIcons
 
 type ServiceItem = {
   icon: ServiceIconName
+  key: string
   title: string
   description: string
 }
@@ -50,7 +53,7 @@ export function Services() {
         </SectionReveal>
 
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {services.map(({ description, icon, title }) => {
+          {services.map(({ description, icon, key, title }) => {
             const Icon = serviceIcons[icon]
 
             return (
@@ -65,9 +68,23 @@ export function Services() {
                   <h3 className="text-xl font-bold leading-tight text-primary">
                     {title}
                   </h3>
-                  <p className="mt-4 text-base font-semibold leading-7 text-muted">
+                  <p className="mt-4 flex-1 text-base font-semibold leading-7 text-muted">
                     {description}
                   </p>
+                  <Link
+                    aria-label={t('services.cardCtaAria', { service: title })}
+                    className="group mt-7 inline-flex min-h-11 items-center justify-between gap-3 rounded-xl border border-primary/10 bg-primary/5 px-4 text-sm font-black text-primary transition duration-200 hover:-translate-y-0.5 hover:border-accent/45 hover:bg-accent-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    to={{
+                      pathname: '/chat',
+                      search: `?service=${encodeURIComponent(key)}`,
+                    }}
+                  >
+                    <span>{t('services.cardCta')}</span>
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="size-4 shrink-0 transition group-hover:translate-x-1"
+                    />
+                  </Link>
                 </Card>
               </SectionReveal>
             )
