@@ -604,6 +604,9 @@
       "request": "Оставить заявку",
       "sendTranscript": "Перенести в WhatsApp",
       "sendTranscriptAriaLabel": "Открыть WhatsApp с перепиской из чата",
+      "copyTranscript": "Скопировать",
+      "copyTranscriptSuccess": "Скопировано",
+      "copyTranscriptAriaLabel": "Скопировать переписку из чата",
       "restart": "Начать заново"
     }
   },

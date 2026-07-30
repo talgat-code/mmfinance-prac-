@@ -604,6 +604,9 @@
       "request": "Өтінім қалдыру",
       "sendTranscript": "WhatsApp-қа өткізу",
       "sendTranscriptAriaLabel": "Чаттағы хат алмасумен WhatsApp ашу",
+      "copyTranscript": "Көшіру",
+      "copyTranscriptSuccess": "Көшірілді",
+      "copyTranscriptAriaLabel": "Чаттағы хат алмасуды көшіру",
       "restart": "Қайта бастау"
     }
   },

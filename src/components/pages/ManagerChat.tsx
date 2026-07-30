@@ -13,6 +13,7 @@ import {
   CircleDollarSign,
   ClipboardList,
   Clock3,
+  Copy,
   FileCheck2,
   Landmark,
   MessageCircle,
@@ -145,6 +146,7 @@ export function ManagerChat() {
   const [leadValues, setLeadValues] = useState<LeadFormValues>(initialLeadFormValues)
   const [leadTouched, setLeadTouched] =
     useState<LeadFormTouched>(initialLeadFormTouched)
+  const [isTranscriptCopiedVisible, setIsTranscriptCopiedVisible] = useState(false)
   const [isLeadSuccessVisible, setIsLeadSuccessVisible] = useState(false)
   const messageInputRef = useRef<HTMLInputElement>(null)
   const endOfChatRef = useRef<HTMLDivElement>(null)
@@ -237,6 +239,16 @@ export function ManagerChat() {
 
     return () => window.clearTimeout(timer)
   }, [isLeadSuccessVisible])
+
+  useEffect(() => {
+    if (!isTranscriptCopiedVisible) {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => setIsTranscriptCopiedVisible(false), 2500)
+
+    return () => window.clearTimeout(timer)
+  }, [isTranscriptCopiedVisible])
 
   useEffect(() => {
     endOfChatRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -337,6 +349,16 @@ export function ManagerChat() {
     sendMessage(inputValue)
   }
 
+  const handleCopyTranscript = async () => {
+    try {
+      await navigator.clipboard?.writeText(buildTranscript())
+    } catch {
+      // Clipboard can be blocked in some browser contexts.
+    }
+
+    setIsTranscriptCopiedVisible(true)
+  }
+
   const resetChat = () => {
     if (typingTimerRef.current) {
       window.clearTimeout(typingTimerRef.current)
@@ -346,6 +368,7 @@ export function ManagerChat() {
     setInputValue('')
     setIsTouched(false)
     setIsTyping(false)
+    setIsTranscriptCopiedVisible(false)
     focusMessageInput()
   }
 
@@ -601,7 +624,7 @@ export function ManagerChat() {
                 </div>
               </div>
 
-              <div className="mb-4 grid gap-2 sm:grid-cols-2">
+              <div className="mb-4 grid gap-2 sm:grid-cols-3">
                 <a
                   aria-label={t('chat.actions.sendTranscriptAriaLabel')}
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
@@ -612,6 +635,23 @@ export function ManagerChat() {
                   <MessageCircle aria-hidden="true" className="size-4" />
                   {t('chat.actions.sendTranscript')}
                 </a>
+                <button
+                  aria-label={t('chat.actions.copyTranscriptAriaLabel')}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+                  onClick={handleCopyTranscript}
+                  type="button"
+                >
+                  {isTranscriptCopiedVisible ? (
+                    <CheckCircle2 aria-hidden="true" className="size-4" />
+                  ) : (
+                    <Copy aria-hidden="true" className="size-4" />
+                  )}
+                  <span aria-live="polite">
+                    {isTranscriptCopiedVisible
+                      ? t('chat.actions.copyTranscriptSuccess')
+                      : t('chat.actions.copyTranscript')}
+                  </span>
+                </button>
                 <button
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
                   onClick={resetChat}
