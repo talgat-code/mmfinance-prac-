@@ -5,10 +5,11 @@ import {
   CheckCircle2,
   ClipboardCheck,
   MessageCircle,
+  RotateCcw,
   Send,
   SlidersHorizontal,
 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { SectionHeading } from '../ui/SectionHeading'
@@ -16,6 +17,7 @@ import { SectionReveal } from '../ui/SectionReveal'
 
 const productKeys = ['consumer', 'mortgage', 'pledge', 'business'] as const
 const readinessKeys = ['identity', 'income', 'history', 'property'] as const
+const calculatorStorageKey = 'mm-finance-calculator-state-v1'
 
 type ProductKey = (typeof productKeys)[number]
 type ReadinessKey = (typeof readinessKeys)[number]
@@ -28,6 +30,13 @@ type ProductInfo = {
 type ReadinessItem = {
   key: ReadinessKey
   label: string
+}
+type CalculatorState = {
+  amount: number
+  income: number
+  months: number
+  productKey: ProductKey
+  readyItems: Record<ReadinessKey, boolean>
 }
 
 const productRates: Record<ProductKey, number> = {
@@ -50,20 +59,80 @@ const calculateMonthlyPayment = (
   return amount * (monthlyRate / (1 - (1 + monthlyRate) ** -months))
 }
 
-export function FinanceTools() {
-  const { i18n, t } = useTranslation()
-  const locale = i18n.resolvedLanguage === 'kk' ? 'kk-KZ' : 'ru-RU'
-  const whatsappHref = t('contacts.whatsappHref')
-  const [productKey, setProductKey] = useState<ProductKey>('consumer')
-  const [amount, setAmount] = useState(5000000)
-  const [months, setMonths] = useState(36)
-  const [income, setIncome] = useState(450000)
-  const [readyItems, setReadyItems] = useState<Record<ReadinessKey, boolean>>({
+const createDefaultCalculatorState = (): CalculatorState => ({
+  amount: 5000000,
+  income: 450000,
+  months: 36,
+  productKey: 'consumer',
+  readyItems: {
     history: false,
     identity: true,
     income: false,
     property: false,
-  })
+  },
+})
+
+const isProductKey = (value: unknown): value is ProductKey =>
+  productKeys.includes(value as ProductKey)
+
+const getFiniteNumber = (value: unknown, fallback: number) =>
+  typeof value === 'number' && Number.isFinite(value) ? value : fallback
+
+const getInitialCalculatorState = () => {
+  const fallbackState = createDefaultCalculatorState()
+
+  if (typeof window === 'undefined') {
+    return fallbackState
+  }
+
+  try {
+    const storedValue = window.localStorage.getItem(calculatorStorageKey)
+
+    if (!storedValue) {
+      return fallbackState
+    }
+
+    const storedState = JSON.parse(storedValue) as Partial<CalculatorState>
+    const readyItems = { ...fallbackState.readyItems }
+
+    if (storedState.readyItems && typeof storedState.readyItems === 'object') {
+      readinessKeys.forEach((key) => {
+        if (typeof storedState.readyItems?.[key] === 'boolean') {
+          readyItems[key] = storedState.readyItems[key]
+        }
+      })
+    }
+
+    return {
+      amount: clampNumber(
+        getFiniteNumber(storedState.amount, fallbackState.amount),
+        1000000,
+        50000000,
+      ),
+      income: Math.max(getFiniteNumber(storedState.income, fallbackState.income), 0),
+      months: clampNumber(
+        getFiniteNumber(storedState.months, fallbackState.months),
+        6,
+        84,
+      ),
+      productKey: isProductKey(storedState.productKey)
+        ? storedState.productKey
+        : fallbackState.productKey,
+      readyItems,
+    }
+  } catch {
+    return fallbackState
+  }
+}
+
+export function FinanceTools() {
+  const { i18n, t } = useTranslation()
+  const locale = i18n.resolvedLanguage === 'kk' ? 'kk-KZ' : 'ru-RU'
+  const whatsappHref = t('contacts.whatsappHref')
+  const [calculatorState, setCalculatorState] = useState<CalculatorState>(
+    getInitialCalculatorState,
+  )
+  const { amount, income, months, productKey, readyItems } = calculatorState
   const moneyFormatter = useMemo(
     () =>
       new Intl.NumberFormat(locale, {
@@ -81,6 +150,18 @@ export function FinanceTools() {
       }),
     [locale],
   )
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        calculatorStorageKey,
+        JSON.stringify(calculatorState),
+      )
+    } catch {
+      // Storage can be unavailable in private mode or restricted browser contexts.
+    }
+  }, [calculatorState])
+
   const products = t('tools.products', { returnObjects: true }) as Array<
     Omit<ProductInfo, 'rate'>
   >
@@ -114,6 +195,8 @@ export function FinanceTools() {
     whatsappMessage,
   )}`
 
+  const resetCalculator = () => setCalculatorState(createDefaultCalculatorState())
+
   return (
     <section className="bg-surface py-20 sm:py-24" id="tools">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -138,11 +221,25 @@ export function FinanceTools() {
                     <h2 className="mt-1 text-2xl font-black text-primary">
                       {t('tools.calculator.title')}
                     </h2>
+                    <p className="mt-2 text-xs font-semibold leading-5 text-muted">
+                      {t('tools.calculator.savedNote')}
+                    </p>
                   </div>
-                  <span className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-border bg-white px-3 text-sm font-bold text-primary">
-                    <Calculator aria-hidden="true" className="size-4 text-accent" />
-                    {t('tools.calculator.note')}
-                  </span>
+                  <div className="flex flex-wrap gap-2 sm:justify-end">
+                    <span className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-border bg-white px-3 text-sm font-bold text-primary">
+                      <Calculator aria-hidden="true" className="size-4 text-accent" />
+                      {t('tools.calculator.note')}
+                    </span>
+                    <button
+                      aria-label={t('tools.calculator.resetAriaLabel')}
+                      className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-border bg-white px-3 text-sm font-bold text-primary transition hover:border-accent/60 hover:text-accent"
+                      onClick={resetCalculator}
+                      type="button"
+                    >
+                      <RotateCcw aria-hidden="true" className="size-4" />
+                      {t('tools.calculator.reset')}
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -163,7 +260,12 @@ export function FinanceTools() {
                               : 'border-border bg-white text-muted hover:border-accent/60 hover:text-primary'
                           }`}
                           key={item.key}
-                          onClick={() => setProductKey(item.key)}
+                          onClick={() =>
+                            setCalculatorState((currentState) => ({
+                              ...currentState,
+                              productKey: item.key,
+                            }))
+                          }
                           type="button"
                         >
                           <span className="block text-sm font-black">{item.label}</span>
@@ -187,9 +289,14 @@ export function FinanceTools() {
                       max={50000000}
                       min={1000000}
                       onChange={(event) =>
-                        setAmount(
-                          clampNumber(Number(event.target.value), 1000000, 50000000),
-                        )
+                        setCalculatorState((currentState) => ({
+                          ...currentState,
+                          amount: clampNumber(
+                            getFiniteNumber(Number(event.target.value), currentState.amount),
+                            1000000,
+                            50000000,
+                          ),
+                        }))
                       }
                       step={500000}
                       type="number"
@@ -200,7 +307,15 @@ export function FinanceTools() {
                       className="mt-3 w-full accent-accent"
                       max={50000000}
                       min={1000000}
-                      onChange={(event) => setAmount(Number(event.target.value))}
+                      onChange={(event) =>
+                        setCalculatorState((currentState) => ({
+                          ...currentState,
+                          amount: getFiniteNumber(
+                            Number(event.target.value),
+                            currentState.amount,
+                          ),
+                        }))
+                      }
                       step={500000}
                       type="range"
                       value={amount}
@@ -217,7 +332,14 @@ export function FinanceTools() {
                       max={84}
                       min={6}
                       onChange={(event) =>
-                        setMonths(clampNumber(Number(event.target.value), 6, 84))
+                        setCalculatorState((currentState) => ({
+                          ...currentState,
+                          months: clampNumber(
+                            getFiniteNumber(Number(event.target.value), currentState.months),
+                            6,
+                            84,
+                          ),
+                        }))
                       }
                       step={6}
                       type="number"
@@ -228,7 +350,15 @@ export function FinanceTools() {
                       className="mt-3 w-full accent-accent"
                       max={84}
                       min={6}
-                      onChange={(event) => setMonths(Number(event.target.value))}
+                      onChange={(event) =>
+                        setCalculatorState((currentState) => ({
+                          ...currentState,
+                          months: getFiniteNumber(
+                            Number(event.target.value),
+                            currentState.months,
+                          ),
+                        }))
+                      }
                       step={6}
                       type="range"
                       value={months}
@@ -244,7 +374,13 @@ export function FinanceTools() {
                       inputMode="numeric"
                       min={0}
                       onChange={(event) =>
-                        setIncome(Math.max(Number(event.target.value), 0))
+                        setCalculatorState((currentState) => ({
+                          ...currentState,
+                          income: Math.max(
+                            getFiniteNumber(Number(event.target.value), currentState.income),
+                            0,
+                          ),
+                        }))
                       }
                       step={50000}
                       type="number"
@@ -341,9 +477,12 @@ export function FinanceTools() {
                         checked={readyItems[item.key]}
                         className="size-4 accent-accent"
                         onChange={(event) =>
-                          setReadyItems((currentItems) => ({
-                            ...currentItems,
-                            [item.key]: event.target.checked,
+                          setCalculatorState((currentState) => ({
+                            ...currentState,
+                            readyItems: {
+                              ...currentState.readyItems,
+                              [item.key]: event.target.checked,
+                            },
                           }))
                         }
                         type="checkbox"
