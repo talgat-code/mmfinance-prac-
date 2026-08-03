@@ -4,6 +4,7 @@ import {
   Calculator,
   CheckCircle2,
   ClipboardCheck,
+  Copy,
   MessageCircle,
   RotateCcw,
   Send,
@@ -132,6 +133,7 @@ export function FinanceTools() {
   const [calculatorState, setCalculatorState] = useState<CalculatorState>(
     getInitialCalculatorState,
   )
+  const [isSummaryCopiedVisible, setIsSummaryCopiedVisible] = useState(false)
   const { amount, income, months, productKey, readyItems } = calculatorState
   const moneyFormatter = useMemo(
     () =>
@@ -161,6 +163,16 @@ export function FinanceTools() {
       // Storage can be unavailable in private mode or restricted browser contexts.
     }
   }, [calculatorState])
+
+  useEffect(() => {
+    if (!isSummaryCopiedVisible) {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => setIsSummaryCopiedVisible(false), 2500)
+
+    return () => window.clearTimeout(timer)
+  }, [isSummaryCopiedVisible])
 
   const products = t('tools.products', { returnObjects: true }) as Array<
     Omit<ProductInfo, 'rate'>
@@ -195,7 +207,20 @@ export function FinanceTools() {
     whatsappMessage,
   )}`
 
-  const resetCalculator = () => setCalculatorState(createDefaultCalculatorState())
+  const resetCalculator = () => {
+    setCalculatorState(createDefaultCalculatorState())
+    setIsSummaryCopiedVisible(false)
+  }
+
+  const handleCopySummary = async () => {
+    try {
+      await navigator.clipboard?.writeText(whatsappMessage)
+    } catch {
+      // Clipboard access can be blocked in some browser contexts.
+    }
+
+    setIsSummaryCopiedVisible(true)
+  }
 
   return (
     <section className="bg-surface py-20 sm:py-24" id="tools">
@@ -516,6 +541,23 @@ export function FinanceTools() {
                     <MessageCircle aria-hidden="true" className="size-4" />
                     {t('tools.next.whatsapp')}
                   </a>
+                  <button
+                    aria-label={t('tools.next.copyAriaLabel')}
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 text-sm font-black text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+                    onClick={handleCopySummary}
+                    type="button"
+                  >
+                    {isSummaryCopiedVisible ? (
+                      <CheckCircle2 aria-hidden="true" className="size-4" />
+                    ) : (
+                      <Copy aria-hidden="true" className="size-4" />
+                    )}
+                    <span aria-live="polite">
+                      {isSummaryCopiedVisible
+                        ? t('tools.next.copySuccess')
+                        : t('tools.next.copy')}
+                    </span>
+                  </button>
                   <Link
                     className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 text-sm font-black text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
                     to="/chat"
