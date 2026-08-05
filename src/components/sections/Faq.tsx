@@ -4,6 +4,7 @@ import {
   ChevronDown,
   MessageCircle,
   PhoneCall,
+  Search,
   ShieldQuestionMark,
 } from 'lucide-react'
 import { useState } from 'react'
@@ -17,11 +18,23 @@ type FaqItem = {
   question: string
 }
 
+const normalizeFaqText = (value: string) =>
+  value.toLowerCase().replaceAll('\u0451', '\u0435').trim()
+
 export function Faq() {
   const { t } = useTranslation()
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [searchQuery, setSearchQuery] = useState('')
   const items = t('faq.items', { returnObjects: true }) as FaqItem[]
   const phoneHref = t('contacts.phoneHref')
+  const normalizedSearchQuery = normalizeFaqText(searchQuery)
+  const filteredItems = normalizedSearchQuery
+    ? items.filter((item) =>
+        normalizeFaqText(`${item.question} ${item.answer}`).includes(
+          normalizedSearchQuery,
+        ),
+      )
+    : items
 
   return (
     <section className="relative overflow-hidden bg-background py-20 sm:py-24" id="faq">
@@ -76,55 +89,88 @@ export function Faq() {
 
         <SectionReveal className="min-w-0">
           <div className="grid gap-3">
-            {items.map((item, index) => {
-              const isOpen = openIndex === index
-              const answerId = `faq-answer-${index}`
+            <div className="relative">
+              <Search
+                aria-hidden="true"
+                className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-accent"
+              />
+              <label className="sr-only" htmlFor="faq-search">
+                {t('faq.search.label')}
+              </label>
+              <input
+                className="min-h-14 w-full rounded-2xl border border-border bg-white px-12 text-base font-bold text-primary shadow-sm outline-none transition placeholder:text-muted/55 focus:border-accent focus:ring-4 focus:ring-accent/15"
+                id="faq-search"
+                onChange={(event) => {
+                  setSearchQuery(event.target.value)
+                  setOpenIndex(0)
+                }}
+                placeholder={t('faq.search.placeholder')}
+                type="search"
+                value={searchQuery}
+              />
+            </div>
 
-              return (
-                <div
-                  className="overflow-hidden rounded-2xl border border-border bg-white shadow-soft"
-                  key={item.question}
-                >
-                  <button
-                    aria-controls={answerId}
-                    aria-expanded={isOpen}
-                    className="flex min-h-16 w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-accent-soft/55 sm:px-6"
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    type="button"
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item, index) => {
+                const isOpen = openIndex === index
+                const answerId = `faq-answer-${index}`
+
+                return (
+                  <div
+                    className="overflow-hidden rounded-2xl border border-border bg-white shadow-soft"
+                    key={item.question}
                   >
-                    <span className="text-base font-black leading-6 text-primary sm:text-lg">
-                      {item.question}
-                    </span>
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-primary ring-1 ring-accent/20">
-                      <ChevronDown
-                        aria-hidden="true"
-                        className={`size-5 transition-transform duration-300 ${
-                          isOpen ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </span>
-                  </button>
+                    <button
+                      aria-controls={answerId}
+                      aria-expanded={isOpen}
+                      className="flex min-h-16 w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-accent-soft/55 sm:px-6"
+                      onClick={() => setOpenIndex(isOpen ? null : index)}
+                      type="button"
+                    >
+                      <span className="text-base font-black leading-6 text-primary sm:text-lg">
+                        {item.question}
+                      </span>
+                      <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-primary ring-1 ring-accent/20">
+                        <ChevronDown
+                          aria-hidden="true"
+                          className={`size-5 transition-transform duration-300 ${
+                            isOpen ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </span>
+                    </button>
 
-                  <AnimatePresence initial={false}>
-                    {isOpen ? (
-                      <motion.div
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        id={answerId}
-                        initial={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.24, ease: 'easeOut' }}
-                      >
-                        <div className="border-t border-border px-5 py-4 sm:px-6">
-                          <p className="text-sm font-semibold leading-7 text-muted sm:text-base">
-                            {item.answer}
-                          </p>
-                        </div>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
-                </div>
-              )
-            })}
+                    <AnimatePresence initial={false}>
+                      {isOpen ? (
+                        <motion.div
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          id={answerId}
+                          initial={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.24, ease: 'easeOut' }}
+                        >
+                          <div className="border-t border-border px-5 py-4 sm:px-6">
+                            <p className="text-sm font-semibold leading-7 text-muted sm:text-base">
+                              {item.answer}
+                            </p>
+                          </div>
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
+                  </div>
+                )
+              })
+            ) : (
+              <div className="rounded-2xl border border-dashed border-border bg-white/80 p-6 text-center shadow-sm">
+                <Search aria-hidden="true" className="mx-auto size-7 text-accent" />
+                <h3 className="mt-3 text-lg font-black text-primary">
+                  {t('faq.search.emptyTitle')}
+                </h3>
+                <p className="mx-auto mt-2 max-w-md text-sm font-semibold leading-6 text-muted">
+                  {t('faq.search.emptyText')}
+                </p>
+              </div>
+            )}
           </div>
 
           <Link
