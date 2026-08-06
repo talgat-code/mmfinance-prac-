@@ -110,7 +110,7 @@ type ManagerAvatarProps = {
 function ManagerAvatar({ compact = false }: ManagerAvatarProps) {
   return (
     <span
-      className={`relative flex shrink-0 items-center justify-center overflow-hidden bg-[linear-gradient(135deg,_#ecfdf5,_#22c55e_52%,_#dcfce7)] text-primary shadow-[0_18px_45px_rgb(34_197_94_/_0.22)] ring-1 ring-white/30 ${
+      className={`relative flex shrink-0 items-center justify-center overflow-hidden bg-[linear-gradient(135deg,_#fffaf0,_#d4af37_52%,_#fff7df)] text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.22)] ring-1 ring-white/30 ${
         compact ? 'mt-1 size-9 rounded-xl' : 'size-14 rounded-2xl'
       }`}
     >
@@ -121,7 +121,7 @@ function ManagerAvatar({ compact = false }: ManagerAvatarProps) {
         strokeWidth={2.4}
       />
       {!compact ? (
-        <span className="absolute -right-1 -top-1 size-4 rounded-full border-2 border-primary bg-emerald-400" />
+        <span className="absolute -right-1 -top-1 size-4 rounded-full border-2 border-primary bg-accent" />
       ) : null}
     </span>
   )
@@ -444,7 +444,7 @@ export function ManagerChat() {
 
           <div className="overflow-hidden rounded-[1.75rem] bg-primary text-white shadow-[0_34px_110px_rgb(7_20_38_/_0.24)] ring-1 ring-primary/10">
             <div className="relative overflow-hidden border-b border-white/10 bg-white/8 p-5 sm:p-6">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,_rgb(34_197_94_/_0.2),_transparent_34%),linear-gradient(135deg,_rgb(255_255_255_/_0.08),_transparent_48%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,_rgb(212_175_55_/_0.2),_transparent_34%),linear-gradient(135deg,_rgb(255_255_255_/_0.08),_transparent_48%)]" />
               <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
                   <ManagerAvatar />
@@ -461,13 +461,13 @@ export function ManagerChat() {
 
                 <div className="flex flex-col gap-2 sm:items-end">
                   <div className="flex flex-wrap gap-2">
-                    <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-emerald-300/25 bg-emerald-400/12 px-3 text-xs font-bold text-emerald-100">
+                    <span className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-accent/30 bg-accent/12 px-3 text-xs font-bold text-accent-soft">
                       <motion.span
                         animate={{
                           opacity: [0.45, 1, 0.45],
                           scale: [0.9, 1.14, 0.9],
                         }}
-                        className="size-2 rounded-full bg-emerald-300"
+                        className="size-2 rounded-full bg-accent"
                         transition={{ duration: 1.35, repeat: Infinity }}
                       />
                       {t('chat.onlineStatus')}
@@ -480,7 +480,7 @@ export function ManagerChat() {
                   <div className="grid w-full gap-2 sm:w-auto sm:grid-cols-2">
                     <a
                       aria-label={t('contacts.whatsappAriaLabel')}
-                      className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent px-3 text-xs font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
+                      className="inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent px-3 text-xs font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#b88a16]"
                       href={whatsappUrl}
                       rel="noreferrer"
                       target="_blank"
@@ -605,7 +605,7 @@ export function ManagerChat() {
                         onClick={() => sendMessage(reply.message, reply.response)}
                         type="button"
                       >
-                        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-primary shadow-[0_12px_30px_rgb(34_197_94_/_0.18)] transition group-hover:bg-accent">
+                        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-primary shadow-[0_12px_30px_rgb(212_175_55_/_0.18)] transition group-hover:bg-accent">
                           <Icon aria-hidden="true" className="size-5" />
                         </span>
                         <span className="min-w-0">
@@ -694,7 +694,7 @@ export function ManagerChat() {
                 </div>
                 <button
                   aria-label={t('chat.sendAriaLabel')}
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(34_197_94_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#16a34a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#b88a16] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
                   disabled={isTyping}
                   type="submit"
                 >
@@ -746,7 +746,7 @@ export function ManagerChat() {
           </div>
 
           <div className="relative overflow-hidden rounded-[1.5rem] bg-primary p-6 text-white shadow-[0_24px_80px_rgb(7_20_38_/_0.18)]">
-            <div className="absolute inset-0 bg-[linear-gradient(145deg,_rgb(34_197_94_/_0.22),_transparent_46%),linear-gradient(180deg,_rgb(255_255_255_/_0.06),_transparent)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(145deg,_rgb(212_175_55_/_0.22),_transparent_46%),linear-gradient(180deg,_rgb(255_255_255_/_0.06),_transparent)]" />
             <div className="relative flex items-start gap-4">
               <ManagerAvatar />
               <div>
@@ -889,7 +889,7 @@ export function ManagerChat() {
 
               <button
                 aria-label={t('chat.leadForm.submitAriaLabel')}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(34_197_94_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#16a34a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-black text-primary shadow-[0_18px_45px_rgb(212_175_55_/_0.28)] transition hover:-translate-y-0.5 hover:bg-[#b88a16] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none disabled:hover:translate-y-0"
                 disabled={!isLeadFormValid}
                 type="submit"
               >
@@ -900,7 +900,7 @@ export function ManagerChat() {
               {isLeadSuccessVisible ? (
                 <p
                   aria-live="polite"
-                  className="flex items-center gap-2 text-sm font-semibold text-emerald-700"
+                  className="flex items-center gap-2 text-sm font-semibold text-sky-700"
                 >
                   <CheckCircle2 aria-hidden="true" className="size-4" />
                   {t('chat.leadForm.success')}
@@ -916,7 +916,7 @@ export function ManagerChat() {
           <div className="grid gap-3 rounded-[1.5rem] bg-primary p-5 text-white shadow-[0_24px_80px_rgb(7_20_38_/_0.18)]">
             <a
               aria-label={t('contacts.whatsappAriaLabel')}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-sm font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-sm font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#b88a16]"
               href={whatsappUrl}
               rel="noreferrer"
               target="_blank"

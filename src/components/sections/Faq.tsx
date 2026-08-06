@@ -39,7 +39,7 @@ export function Faq() {
   return (
     <section className="relative overflow-hidden bg-background py-20 sm:py-24" id="faq">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      <div className="absolute inset-0 bg-[linear-gradient(120deg,_rgb(6_40_26_/_0.04),_transparent_38%),radial-gradient(circle_at_14%_18%,_rgb(34_197_94_/_0.14),_transparent_30%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(120deg,_rgb(8_31_58_/_0.05),_transparent_38%),radial-gradient(circle_at_14%_18%,_rgb(212_175_55_/_0.14),_transparent_30%)]" />
 
       <div className="relative mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8">
         <SectionReveal>
@@ -50,9 +50,9 @@ export function Faq() {
               title={t('faq.title')}
             />
 
-            <div className="mt-8 overflow-hidden rounded-2xl bg-primary text-white shadow-[0_24px_80px_rgb(6_40_26_/_0.18)]">
+            <div className="mt-8 overflow-hidden rounded-2xl bg-primary text-white shadow-[0_24px_80px_rgb(8_31_58_/_0.18)]">
               <div className="relative p-6">
-                <div className="absolute inset-0 bg-[linear-gradient(145deg,_rgb(34_197_94_/_0.22),_transparent_46%),linear-gradient(180deg,_rgb(255_255_255_/_0.06),_transparent)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(145deg,_rgb(212_175_55_/_0.22),_transparent_46%),linear-gradient(180deg,_rgb(255_255_255_/_0.06),_transparent)]" />
                 <div className="relative">
                   <span className="flex size-12 items-center justify-center rounded-xl bg-accent text-primary">
                     <ShieldQuestionMark aria-hidden="true" className="size-6" />
@@ -66,7 +66,7 @@ export function Faq() {
 
                   <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                     <Link
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-sm font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-sm font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#b88a16]"
                       to="/chat"
                     >
                       <MessageCircle aria-hidden="true" className="size-4" />

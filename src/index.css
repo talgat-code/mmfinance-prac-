@@ -3,10 +3,10 @@
 @config "../tailwind.config.js";
 
 :root {
-  --brand-primary: #06281a;
-  --brand-primary-soft: #0f3d2e;
-  --brand-accent: #22c55e;
-  --brand-accent-soft: #dcfce7;
+  --brand-primary: #081f3a;
+  --brand-primary-soft: #12365c;
+  --brand-accent: #d4af37;
+  --brand-accent-soft: #fff7df;
   --brand-background: #f7f8fb;
   --brand-surface: #ffffff;
   --brand-muted: #697386;
@@ -100,7 +100,7 @@ section {
   }
 }
 
-@keyframes green-shimmer {
+@keyframes brand-shimmer {
   0% {
     transform: translateX(-120%);
   }

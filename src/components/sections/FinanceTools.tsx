@@ -191,7 +191,7 @@ export function FinanceTools() {
     income <= 0 ? 'unknown' : burden <= 0.35 ? 'good' : burden <= 0.5 ? 'caution' : 'risk'
   const statusClasses =
     statusKey === 'good'
-      ? 'border-emerald-200 bg-emerald-50 text-emerald-800'
+      ? 'border-sky-200 bg-sky-50 text-sky-900'
       : statusKey === 'caution'
         ? 'border-amber-200 bg-amber-50 text-amber-800'
         : 'border-red-200 bg-red-50 text-red-800'
@@ -518,7 +518,7 @@ export function FinanceTools() {
                 </div>
               </div>
 
-              <div className="rounded-2xl bg-primary p-5 text-white shadow-[0_24px_80px_rgb(6_40_26_/_0.18)] sm:p-6">
+              <div className="rounded-2xl bg-primary p-5 text-white shadow-[0_24px_80px_rgb(8_31_58_/_0.18)] sm:p-6">
                 <div className="flex items-start gap-3">
                   <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-primary">
                     <SlidersHorizontal aria-hidden="true" className="size-5" />
@@ -533,7 +533,7 @@ export function FinanceTools() {
 
                 <div className="mt-5 grid gap-3">
                   <a
-                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-sm font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-sm font-black text-primary transition hover:-translate-y-0.5 hover:bg-[#b88a16]"
                     href={whatsappUrl}
                     rel="noreferrer"
                     target="_blank"

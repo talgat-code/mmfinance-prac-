@@ -32,18 +32,18 @@ export function FloatingContactDock() {
           initial={{ opacity: 0, y: 18 }}
           transition={{ duration: 0.24, ease: 'easeOut' }}
         >
-          <div className="overflow-hidden rounded-2xl border border-white/20 bg-primary/94 p-2 text-white shadow-[0_24px_80px_rgb(6_40_26_/_0.28)] backdrop-blur-xl">
+          <div className="overflow-hidden rounded-2xl border border-white/20 bg-primary/94 p-2 text-white shadow-[0_24px_80px_rgb(8_31_58_/_0.28)] backdrop-blur-xl">
             <div className="hidden items-center justify-between gap-3 px-2 pb-2 pt-1 sm:flex">
               <span className="text-xs font-black uppercase tracking-[0.16em] text-accent">
                 {t('quickDock.title')}
               </span>
-              <span className="size-2 rounded-full bg-accent shadow-[0_0_18px_rgb(34_197_94_/_0.8)]" />
+              <span className="size-2 rounded-full bg-accent shadow-[0_0_18px_rgb(212_175_55_/_0.8)]" />
             </div>
 
             <div className="grid grid-cols-3 gap-2">
               <a
                 aria-label={t('contacts.whatsappAriaLabel')}
-                className="group flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl bg-accent text-primary transition hover:-translate-y-0.5 hover:bg-[#16a34a]"
+                className="group flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl bg-accent text-primary transition hover:-translate-y-0.5 hover:bg-[#b88a16]"
                 href={`https://wa.me/${whatsappHref}`}
                 rel="noreferrer"
                 target="_blank"
