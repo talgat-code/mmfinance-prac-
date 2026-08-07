@@ -10,6 +10,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { ManagerChat } from './components/pages/ManagerChat'
 import { About } from './components/sections/About'
+import { ClientFlow } from './components/sections/ClientFlow'
 import { Contacts } from './components/sections/Contacts'
 import { Faq } from './components/sections/Faq'
 import { FinanceTools } from './components/sections/FinanceTools'
@@ -102,6 +103,7 @@ function LandingPage() {
     <Layout>
       <Hero />
       <PromoPanel />
+      <ClientFlow />
       <FinanceTools />
       <About />
       <Services />
