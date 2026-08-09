@@ -28,6 +28,15 @@ type ProductInfo = {
   helper: string
   rate: number
 }
+type CalculatorPreset = {
+  amount: number
+  helper: string
+  income: number
+  key: string
+  label: string
+  months: number
+  productKey: ProductKey
+}
 type ReadinessItem = {
   key: ReadinessKey
   label: string
@@ -177,6 +186,9 @@ export function FinanceTools() {
   const products = t('tools.products', { returnObjects: true }) as Array<
     Omit<ProductInfo, 'rate'>
   >
+  const presets = t('tools.presets.items', {
+    returnObjects: true,
+  }) as CalculatorPreset[]
   const readinessItems = t('tools.readiness.items', {
     returnObjects: true,
   }) as ReadinessItem[]
@@ -209,6 +221,19 @@ export function FinanceTools() {
 
   const resetCalculator = () => {
     setCalculatorState(createDefaultCalculatorState())
+    setIsSummaryCopiedVisible(false)
+  }
+
+  const applyPreset = (preset: CalculatorPreset) => {
+    setCalculatorState((currentState) => ({
+      ...currentState,
+      amount: clampNumber(preset.amount, 1000000, 50000000),
+      income: Math.max(preset.income, 0),
+      months: clampNumber(preset.months, 6, 84),
+      productKey: isProductKey(preset.productKey)
+        ? preset.productKey
+        : currentState.productKey,
+    }))
     setIsSummaryCopiedVisible(false)
   }
 
@@ -296,6 +321,53 @@ export function FinanceTools() {
                           <span className="block text-sm font-black">{item.label}</span>
                           <span className="mt-1 block text-xs font-semibold leading-5">
                             {item.helper}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-border bg-background/70 p-4">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <p className="text-sm font-bold text-primary">
+                        {t('tools.presets.title')}
+                      </p>
+                      <p className="mt-1 text-xs font-semibold leading-5 text-muted">
+                        {t('tools.presets.description')}
+                      </p>
+                    </div>
+                    <span className="inline-flex min-h-9 items-center gap-2 rounded-xl bg-white px-3 text-xs font-black text-primary ring-1 ring-border">
+                      <SlidersHorizontal aria-hidden="true" className="size-4 text-accent" />
+                      {t('tools.presets.badge')}
+                    </span>
+                  </div>
+
+                  <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                    {presets.map((preset) => {
+                      const isActive =
+                        preset.productKey === productKey &&
+                        preset.amount === amount &&
+                        preset.income === income &&
+                        preset.months === months
+
+                      return (
+                        <button
+                          className={`min-h-20 rounded-xl border px-4 py-3 text-left transition ${
+                            isActive
+                              ? 'border-accent bg-accent-soft text-primary shadow-sm'
+                              : 'border-border bg-white text-primary hover:border-accent/60 hover:shadow-sm'
+                          }`}
+                          key={preset.key}
+                          onClick={() => applyPreset(preset)}
+                          type="button"
+                        >
+                          <span className="block text-sm font-black">
+                            {preset.label}
+                          </span>
+                          <span className="mt-1 block text-xs font-semibold leading-5 text-muted">
+                            {preset.helper}
                           </span>
                         </button>
                       )

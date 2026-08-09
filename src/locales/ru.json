@@ -205,6 +205,49 @@
       "income": "Доход в месяц",
       "incomeHint": "Укажите примерный подтверждаемый доход."
     },
+    "presets": {
+      "title": "Готовые сценарии",
+      "description": "Выберите близкую ситуацию - калькулятор сам подставит стартовые значения.",
+      "badge": "быстрый старт",
+      "items": [
+        {
+          "key": "consumer-start",
+          "label": "Потребительский старт",
+          "helper": "5 млн на 36 месяцев при доходе 450 тыс.",
+          "productKey": "consumer",
+          "amount": 5000000,
+          "income": 450000,
+          "months": 36
+        },
+        {
+          "key": "mortgage-check",
+          "label": "Проверка ипотеки",
+          "helper": "15 млн на 84 месяца при доходе 850 тыс.",
+          "productKey": "mortgage",
+          "amount": 15000000,
+          "income": 850000,
+          "months": 84
+        },
+        {
+          "key": "business-growth",
+          "label": "Бизнес-задача",
+          "helper": "25 млн на 48 месяцев при доходе 1.4 млн.",
+          "productKey": "business",
+          "amount": 25000000,
+          "income": 1400000,
+          "months": 48
+        },
+        {
+          "key": "pledge-large",
+          "label": "Залоговая сумма",
+          "helper": "12 млн на 60 месяцев при доходе 700 тыс.",
+          "productKey": "pledge",
+          "amount": 12000000,
+          "income": 700000,
+          "months": 60
+        }
+      ]
+    },
     "result": {
       "payment": "Платеж в месяц",
       "rate": "Ориентир ставки",

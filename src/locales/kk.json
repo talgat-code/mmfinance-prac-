@@ -205,6 +205,49 @@
       "income": "Айлық табыс",
       "incomeHint": "Шамамен расталатын табысты көрсетіңіз."
     },
+    "presets": {
+      "title": "Дайын сценарийлер",
+      "description": "Жағдайыңызға жақын нұсқаны таңдаңыз - калькулятор бастапқы мәндерді өзі қояды.",
+      "badge": "жылдам бастау",
+      "items": [
+        {
+          "key": "consumer-start",
+          "label": "Тұтынушылық старт",
+          "helper": "5 млн, 36 ай, табыс 450 мың.",
+          "productKey": "consumer",
+          "amount": 5000000,
+          "income": 450000,
+          "months": 36
+        },
+        {
+          "key": "mortgage-check",
+          "label": "Ипотеканы тексеру",
+          "helper": "15 млн, 84 ай, табыс 850 мың.",
+          "productKey": "mortgage",
+          "amount": 15000000,
+          "income": 850000,
+          "months": 84
+        },
+        {
+          "key": "business-growth",
+          "label": "Бизнес міндеті",
+          "helper": "25 млн, 48 ай, табыс 1.4 млн.",
+          "productKey": "business",
+          "amount": 25000000,
+          "income": 1400000,
+          "months": 48
+        },
+        {
+          "key": "pledge-large",
+          "label": "Кепіл сомасы",
+          "helper": "12 млн, 60 ай, табыс 700 мың.",
+          "productKey": "pledge",
+          "amount": 12000000,
+          "income": 700000,
+          "months": 60
+        }
+      ]
+    },
     "result": {
       "payment": "Айлық төлем",
       "rate": "Ставка бағдары",
