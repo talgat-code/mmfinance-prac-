@@ -23,6 +23,7 @@ type ContactFormValues = {
   channel: string
   name: string
   phone: string
+  time: string
   topic: string
 }
 
@@ -42,6 +43,7 @@ const formatWhatsappTemplate = (
     .replaceAll('{channel}', values.channel.trim())
     .replaceAll('{name}', values.name.trim())
     .replaceAll('{phone}', values.phone.trim())
+    .replaceAll('{time}', values.time.trim())
     .replaceAll('{topic}', values.topic.trim())
 
 const initialFormValues: ContactFormValues = {
@@ -49,6 +51,7 @@ const initialFormValues: ContactFormValues = {
   channel: 'whatsapp',
   name: '',
   phone: '',
+  time: 'today',
   topic: 'credit',
 }
 
@@ -72,11 +75,16 @@ export function Contacts() {
   const channelOptions = t('contacts.form.channelOptions', {
     returnObjects: true,
   }) as ContactSelectOption[]
+  const timeOptions = t('contacts.form.timeOptions', {
+    returnObjects: true,
+  }) as ContactSelectOption[]
   const selectedTopic =
     topicOptions.find((option) => option.value === formValues.topic) ?? topicOptions[0]
   const selectedChannel =
     channelOptions.find((option) => option.value === formValues.channel) ??
     channelOptions[0]
+  const selectedTime =
+    timeOptions.find((option) => option.value === formValues.time) ?? timeOptions[0]
   const amountValue =
     formValues.amount.trim() || t('contacts.form.amountFallback')
   const trimmedName = formValues.name.trim()
@@ -178,6 +186,7 @@ export function Contacts() {
       channel: selectedChannel?.label ?? formValues.channel,
       name: trimmedName,
       phone: trimmedPhone,
+      time: selectedTime?.label ?? formValues.time,
       topic: selectedTopic?.label ?? formValues.topic,
     })
     const url = `https://wa.me/${whatsappHref}?text=${encodeURIComponent(message)}`
@@ -355,6 +364,28 @@ export function Contacts() {
                     value={formValues.channel}
                   >
                     {channelOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    className="text-sm font-semibold text-primary"
+                    htmlFor="contact-time"
+                  >
+                    {t('contacts.form.timeLabel')}
+                  </label>
+                  <select
+                    className="mt-2 min-h-12 w-full rounded-xl border border-border bg-white px-4 text-primary outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/15"
+                    id="contact-time"
+                    name="time"
+                    onChange={handleChange}
+                    value={formValues.time}
+                  >
+                    {timeOptions.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
                       </option>

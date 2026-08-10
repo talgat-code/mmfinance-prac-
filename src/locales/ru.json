@@ -482,6 +482,21 @@
           "label": "Подойти в офис"
         }
       ],
+      "timeLabel": "Когда удобнее связаться",
+      "timeOptions": [
+        {
+          "value": "today",
+          "label": "Сегодня"
+        },
+        {
+          "value": "tomorrow",
+          "label": "Завтра"
+        },
+        {
+          "value": "office-hours",
+          "label": "В рабочее время"
+        }
+      ],
       "nameLabel": "Имя",
       "namePlaceholder": "Ваше имя",
       "nameRequired": "Введите имя",
@@ -493,7 +508,7 @@
       "submitAriaLabel": "Отправить заявку в WhatsApp",
       "success": "Открываем WhatsApp...",
       "note": "После отправки откроется WhatsApp с подготовленным сообщением.",
-      "whatsappTemplate": "Здравствуйте! Меня зовут {name}, телефон {phone}.\nТема обращения: {topic}.\nЖелаемая сумма: {amount}.\nУдобный способ связи: {channel}.\nХочу получить консультацию MM Finance."
+      "whatsappTemplate": "Здравствуйте! Меня зовут {name}, телефон {phone}.\nТема обращения: {topic}.\nЖелаемая сумма: {amount}.\nУдобный способ связи: {channel}.\nКогда удобнее связаться: {time}.\nХочу получить консультацию MM Finance."
     },
     "map": {
       "title": "Офис MM Finance Consulting",

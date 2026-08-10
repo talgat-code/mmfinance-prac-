@@ -482,6 +482,21 @@
           "label": "Офиске келу"
         }
       ],
+      "timeLabel": "Қашан байланысқан ыңғайлы",
+      "timeOptions": [
+        {
+          "value": "today",
+          "label": "Бүгін"
+        },
+        {
+          "value": "tomorrow",
+          "label": "Ертең"
+        },
+        {
+          "value": "office-hours",
+          "label": "Жұмыс уақытында"
+        }
+      ],
       "nameLabel": "Атыңыз",
       "namePlaceholder": "Атыңыз",
       "nameRequired": "Атыңызды енгізіңіз",
@@ -493,7 +508,7 @@
       "submitAriaLabel": "Өтінімді WhatsApp-қа жіберу",
       "success": "WhatsApp ашылып жатыр...",
       "note": "Жібергеннен кейін дайын хабарламамен WhatsApp ашылады.",
-      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}.\nӨтінім тақырыбы: {topic}.\nҚажет сома: {amount}.\nБайланысуға ыңғайлы жол: {channel}.\nMM Finance кеңесін алғым келеді."
+      "whatsappTemplate": "Сәлеметсіз бе! Менің атым {name}, телефон {phone}.\nӨтінім тақырыбы: {topic}.\nҚажет сома: {amount}.\nБайланысуға ыңғайлы жол: {channel}.\nҚашан байланысқан ыңғайлы: {time}.\nMM Finance кеңесін алғым келеді."
     },
     "map": {
       "title": "MM Finance Consulting офисі",
