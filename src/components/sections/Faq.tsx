@@ -18,6 +18,11 @@ type FaqItem = {
   question: string
 }
 
+type FaqTopic = {
+  label: string
+  query: string
+}
+
 const normalizeFaqText = (value: string) =>
   value.toLowerCase().replaceAll('\u0451', '\u0435').trim()
 
@@ -26,6 +31,7 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
   const [searchQuery, setSearchQuery] = useState('')
   const items = t('faq.items', { returnObjects: true }) as FaqItem[]
+  const topics = t('faq.topics.items', { returnObjects: true }) as FaqTopic[]
   const phoneHref = t('contacts.phoneHref')
   const normalizedSearchQuery = normalizeFaqText(searchQuery)
   const filteredItems = normalizedSearchQuery
@@ -108,6 +114,36 @@ export function Faq() {
                 type="search"
                 value={searchQuery}
               />
+            </div>
+
+            <div className="rounded-2xl border border-border bg-white/80 p-3 shadow-sm">
+              <p className="px-1 text-xs font-black uppercase tracking-[0.14em] text-muted">
+                {t('faq.topics.title')}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {topics.map((topic) => {
+                  const isActive =
+                    normalizeFaqText(topic.query) === normalizedSearchQuery
+
+                  return (
+                    <button
+                      className={`inline-flex min-h-10 items-center rounded-xl border px-3 text-sm font-black transition ${
+                        isActive
+                          ? 'border-accent bg-accent text-primary shadow-[0_12px_30px_rgb(212_175_55_/_0.18)]'
+                          : 'border-border bg-white text-primary hover:border-accent/60 hover:text-primary'
+                      }`}
+                      key={topic.query}
+                      onClick={() => {
+                        setSearchQuery(isActive ? '' : topic.query)
+                        setOpenIndex(0)
+                      }}
+                      type="button"
+                    >
+                      {topic.label}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
 
             {filteredItems.length > 0 ? (
