@@ -1,7 +1,15 @@
 import type { ChangeEvent, FocusEvent, FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
-import { CheckCircle2, Copy, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
+import {
+  CheckCircle2,
+  Clock3,
+  Copy,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Send,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { SectionHeading } from '../ui/SectionHeading'
@@ -65,6 +73,7 @@ export function Contacts() {
   const phoneHref = t('contacts.phoneHref')
   const whatsappHref = t('contacts.whatsappHref')
   const address = t('contacts.address')
+  const workHours = t('contacts.workHours')
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
   const [touched, setTouched] = useState<ContactFormTouched>(initialTouched)
   const [isAddressCopiedVisible, setIsAddressCopiedVisible] = useState(false)
@@ -141,6 +150,11 @@ export function Contacts() {
       title: t('contacts.cards.address'),
       label: address,
     },
+    {
+      icon: Clock3,
+      title: t('contacts.cards.hours'),
+      label: workHours,
+    },
   ]
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -211,7 +225,7 @@ export function Contacts() {
           />
         </SectionReveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {contacts.map(({ ariaLabel, external, href, icon: Icon, label, title }) => {
             const content = (
               <Card className="h-full" hover>

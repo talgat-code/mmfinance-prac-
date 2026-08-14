@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { MapPin, MessageCircle, MessagesSquare, Phone } from 'lucide-react'
+import { Clock3, MapPin, MessageCircle, MessagesSquare, Phone } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -28,6 +28,7 @@ export function Footer() {
       href: `tel:${phoneHref}`,
     },
     { icon: MapPin, text: t('contacts.address') },
+    { icon: Clock3, text: t('contacts.workHours') },
   ]
 
   return (

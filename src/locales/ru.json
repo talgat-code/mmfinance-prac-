@@ -453,10 +453,12 @@
     "callLabel": "Позвонить в MM Finance Consulting",
     "whatsappAriaLabel": "Открыть чат WhatsApp с MM Finance Consulting",
     "address": "БЦ Aspara, 3-этажное здание, 2 этаж, кабинет 226/3",
+    "workHours": "Пн-Сб, 10:00-19:00",
     "cards": {
       "phone": "Телефон",
       "whatsapp": "WhatsApp",
-      "address": "Адрес"
+      "address": "Адрес",
+      "hours": "Режим работы"
     },
     "form": {
       "title": "Заявка на консультацию",
