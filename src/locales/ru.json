@@ -538,7 +538,10 @@
       "description": "Ждем вас в БЦ Aspara: 3-этажное здание, 2 этаж, кабинет 226/3.",
       "copyAddress": "Скопировать адрес",
       "copySuccess": "Адрес скопирован",
-      "copyAriaLabel": "Скопировать адрес офиса MM Finance"
+      "copyAriaLabel": "Скопировать адрес офиса MM Finance",
+      "copyPhone": "Скопировать телефон",
+      "copyPhoneSuccess": "Номер скопирован",
+      "copyPhoneAriaLabel": "Скопировать телефон MM Finance"
     }
   },
   "chat": {

@@ -77,6 +77,7 @@ export function Contacts() {
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
   const [touched, setTouched] = useState<ContactFormTouched>(initialTouched)
   const [isAddressCopiedVisible, setIsAddressCopiedVisible] = useState(false)
+  const [isPhoneCopiedVisible, setIsPhoneCopiedVisible] = useState(false)
   const [isSuccessVisible, setIsSuccessVisible] = useState(false)
   const topicOptions = t('contacts.form.topicOptions', {
     returnObjects: true,
@@ -128,6 +129,16 @@ export function Contacts() {
 
     return () => window.clearTimeout(timer)
   }, [isAddressCopiedVisible])
+
+  useEffect(() => {
+    if (!isPhoneCopiedVisible) {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => setIsPhoneCopiedVisible(false), 2500)
+
+    return () => window.clearTimeout(timer)
+  }, [isPhoneCopiedVisible])
 
   const contacts: ContactItem[] = [
     {
@@ -184,6 +195,16 @@ export function Contacts() {
     }
 
     setIsAddressCopiedVisible(true)
+  }
+
+  const handleCopyPhone = async () => {
+    try {
+      await navigator.clipboard?.writeText(t('contacts.phone'))
+    } catch {
+      // Clipboard access can be blocked outside secure browser contexts.
+    }
+
+    setIsPhoneCopiedVisible(true)
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -284,23 +305,42 @@ export function Contacts() {
                   <p className="mt-5 text-base font-bold leading-7 text-white">
                     {address}
                   </p>
-                  <button
-                    aria-label={t('contacts.map.copyAriaLabel')}
-                    className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-accent/45 bg-accent/12 px-4 text-sm font-bold text-accent transition duration-200 hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-auto"
-                    onClick={handleCopyAddress}
-                    type="button"
-                  >
-                    {isAddressCopiedVisible ? (
-                      <CheckCircle2 aria-hidden="true" className="size-4" />
-                    ) : (
-                      <Copy aria-hidden="true" className="size-4" />
-                    )}
-                    <span>
-                      {isAddressCopiedVisible
-                        ? t('contacts.map.copySuccess')
-                        : t('contacts.map.copyAddress')}
-                    </span>
-                  </button>
+                  <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                    <button
+                      aria-label={t('contacts.map.copyAriaLabel')}
+                      className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-accent/45 bg-accent/12 px-4 text-sm font-bold text-accent transition duration-200 hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                      onClick={handleCopyAddress}
+                      type="button"
+                    >
+                      {isAddressCopiedVisible ? (
+                        <CheckCircle2 aria-hidden="true" className="size-4" />
+                      ) : (
+                        <Copy aria-hidden="true" className="size-4" />
+                      )}
+                      <span>
+                        {isAddressCopiedVisible
+                          ? t('contacts.map.copySuccess')
+                          : t('contacts.map.copyAddress')}
+                      </span>
+                    </button>
+                    <button
+                      aria-label={t('contacts.map.copyPhoneAriaLabel')}
+                      className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/10 px-4 text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                      onClick={handleCopyPhone}
+                      type="button"
+                    >
+                      {isPhoneCopiedVisible ? (
+                        <CheckCircle2 aria-hidden="true" className="size-4" />
+                      ) : (
+                        <Copy aria-hidden="true" className="size-4" />
+                      )}
+                      <span>
+                        {isPhoneCopiedVisible
+                          ? t('contacts.map.copyPhoneSuccess')
+                          : t('contacts.map.copyPhone')}
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </Card>

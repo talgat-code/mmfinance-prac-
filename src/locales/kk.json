@@ -538,7 +538,10 @@
       "description": "Сізді Aspara БЦ-де күтеміз: 3 қабатты ғимарат, 2 қабат, 226/3 кабинет.",
       "copyAddress": "Мекенжайды көшіру",
       "copySuccess": "Мекенжай көшірілді",
-      "copyAriaLabel": "MM Finance офисінің мекенжайын көшіру"
+      "copyAriaLabel": "MM Finance офисінің мекенжайын көшіру",
+      "copyPhone": "Телефонды көшіру",
+      "copyPhoneSuccess": "Нөмір көшірілді",
+      "copyPhoneAriaLabel": "MM Finance телефонын көшіру"
     }
   },
   "chat": {
