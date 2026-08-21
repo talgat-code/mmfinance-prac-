@@ -761,7 +761,9 @@
     "title": "Быстрая связь",
     "whatsapp": "WhatsApp",
     "chat": "Чат",
-    "call": "Звонок"
+    "call": "Звонок",
+    "top": "Наверх",
+    "topAriaLabel": "Вернуться к началу страницы"
   },
   "footer": {
     "tagline": "MM Finance Consulting — надежный партнер в решении финансовых вопросов.",

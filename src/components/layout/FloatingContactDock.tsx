@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { MessageCircle, MessagesSquare, PhoneCall } from 'lucide-react'
+import { ArrowUp, MessageCircle, MessagesSquare, PhoneCall } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
@@ -27,7 +27,7 @@ export function FloatingContactDock() {
         <motion.aside
           animate={{ opacity: 1, y: 0 }}
           aria-label={t('quickDock.label')}
-          className="fixed inset-x-4 bottom-4 z-40 sm:left-auto sm:right-5 sm:w-[19rem]"
+          className="fixed inset-x-4 bottom-4 z-40 sm:left-auto sm:right-5 sm:w-[24rem]"
           exit={{ opacity: 0, y: 18 }}
           initial={{ opacity: 0, y: 18 }}
           transition={{ duration: 0.24, ease: 'easeOut' }}
@@ -40,7 +40,7 @@ export function FloatingContactDock() {
               <span className="size-2 rounded-full bg-accent shadow-[0_0_18px_rgb(212_175_55_/_0.8)]" />
             </div>
 
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               <a
                 aria-label={t('contacts.whatsappAriaLabel')}
                 className="group flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl bg-accent text-primary transition hover:-translate-y-0.5 hover:bg-[#b88a16]"
@@ -71,6 +71,16 @@ export function FloatingContactDock() {
                 <PhoneCall aria-hidden="true" className="size-5" />
                 <span className="text-[0.7rem] font-black leading-4">
                   {t('quickDock.call')}
+                </span>
+              </a>
+              <a
+                aria-label={t('quickDock.topAriaLabel')}
+                className="group flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl border border-white/12 bg-white/10 text-white transition hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+                href="#home"
+              >
+                <ArrowUp aria-hidden="true" className="size-5" />
+                <span className="text-[0.7rem] font-black leading-4">
+                  {t('quickDock.top')}
                 </span>
               </a>
             </div>

@@ -761,7 +761,9 @@
     "title": "Жылдам байланыс",
     "whatsapp": "WhatsApp",
     "chat": "Чат",
-    "call": "Қоңырау"
+    "call": "Қоңырау",
+    "top": "Жоғары",
+    "topAriaLabel": "Беттің басына қайту"
   },
   "footer": {
     "tagline": "MM Finance Consulting — қаржылық мәселелерді шешудегі сенімді серіктес.",
